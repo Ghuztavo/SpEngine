@@ -133,6 +133,11 @@
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\SpEngine\SpEngine.vcxproj">
+      <Project>{023f4eed-a241-455a-a35a-07dc5e202e04}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
