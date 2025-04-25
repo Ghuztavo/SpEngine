@@ -8,7 +8,7 @@ namespace SpEngine::Graphics
 	{
 	public:
 		static void StaticInitialize(HWND window, bool fullscreen);
-		static void StaicTerminate();
+		static void StaticTerminate();
 		static GraphicsSystem* Get();
 
 		GraphicsSystem() = default;

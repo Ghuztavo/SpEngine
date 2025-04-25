@@ -35,7 +35,7 @@ void GraphicsSystem::StaticInitialize(HWND window, bool fullscreen)
 	sGraphicsSystem->Initialize(window, fullscreen);
 }
 
-void GraphicsSystem::StaicTerminate()
+void GraphicsSystem::StaticTerminate()
 {
 	if (sGraphicsSystem != nullptr)
 	{
@@ -105,12 +105,12 @@ void GraphicsSystem::Terminate()
 {
 	sWindowMessageHandler.Unhook();
 
-	SafeRealease(mDepthStencilView);
-	SafeRealease(mDepthStencilBuffer);
-	SafeRealease(mRenderTargetView);
-	SafeRealease(mSwapChain);
-	SafeRealease(mImmediateContext);
-	SafeRealease(mD3DDevice);
+	SafeRelease(mDepthStencilView);
+	SafeRelease(mDepthStencilBuffer);
+	SafeRelease(mRenderTargetView);
+	SafeRelease(mSwapChain);
+	SafeRelease(mImmediateContext);
+	SafeRelease(mD3DDevice);
 
 }
 
@@ -137,9 +137,9 @@ void GraphicsSystem::Resize(uint32_t width, uint32_t height)
 {
 	mImmediateContext->OMSetRenderTargets(0, nullptr, nullptr);
 
-	SafeRealease(mRenderTargetView);
-	SafeRealease(mDepthStencilView);
-	SafeRealease(mDepthStencilBuffer);
+	SafeRelease(mRenderTargetView);
+	SafeRelease(mDepthStencilView);
+	SafeRelease(mDepthStencilBuffer);
 
 	HRESULT hr;
 	if (width != GetBackBufferWidth() || height != GetBackBufferHeight())
@@ -155,7 +155,7 @@ void GraphicsSystem::Resize(uint32_t width, uint32_t height)
 	ASSERT(SUCCEEDED(hr), "GraphicsSystem: failed to get back buffer");
 
 	hr = mD3DDevice->CreateRenderTargetView(backBuffer, nullptr, &mRenderTargetView);
-	SafeRealease(backBuffer);
+	SafeRelease(backBuffer);
 	ASSERT(SUCCEEDED(hr), "GraphicsSystem: failed to create render target");
 
 	D3D11_TEXTURE2D_DESC depthDesc = {};
@@ -183,8 +183,12 @@ void GraphicsSystem::Resize(uint32_t width, uint32_t height)
 	ResetRenderTarget();
 
 	mViewport.Width = static_cast<float>(GetBackBufferWidth());
-	mViewport.Height
-		//complete
+	mViewport.Height = static_cast<float>(GetBackBufferHeight());
+	mViewport.MinDepth = 0.0f;
+	mViewport.MaxDepth = 1.0f;
+	mViewport.TopLeftX = 0;
+	mViewport.TopLeftY = 0;
+	ResetViewport();
 }
 
 void GraphicsSystem::ResetRenderTarget()

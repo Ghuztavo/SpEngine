@@ -15,6 +15,7 @@ void ShapeState::Initialize()
 	auto device = GraphicsSystem::Get()->GetDevice();
 
 	//need to create a buffer to store the vertices
+	//STORES DATA FOR THE OBJECT
 	D3D11_BUFFER_DESC bufferDesc{};
 	bufferDesc.ByteWidth = static_cast<UINT>(mVertices.size()) * sizeof(Vertex);
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -30,7 +31,7 @@ void ShapeState::Initialize()
 	//==================================================
 
 	//BIND TO FUNCTION IN SPECIFIED SHADER FILE
-	std::filesystem::path shaderDilePath = L"../../Assets/Shaders/DoSomething.fx";
+	std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoSomething.fx";
 
 	DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 	ID3DBlob* shaderBlob = nullptr;
@@ -55,7 +56,7 @@ void ShapeState::Initialize()
 		shaderBlob->GetBufferSize(),
 		nullptr,
 		&mVertexShader);
-	ASSERT(SUCCEEDED(hr), "Failed to create vertex shader");
+	ASSERT(SUCCEEDED(hr), "Failed to compile vertex shader");
 	//=======================================================
 
 	//STATE WHAT THE VERTEX VARIABLE ARE
@@ -71,7 +72,9 @@ void ShapeState::Initialize()
 	ASSERT(SUCCEEDED(hr), "Failed to create input layout");
 	SafeRelease(shaderBlob);
 	SafeRelease(errorBlob);
+	//=======================================================
 
+	//BIND TO PIXEL FUNCTION IN SPECIFIED SHADER FILE
 	hr = D3DCompileFromFile(
 		shaderFilePath.c_str(),
 		nullptr,
@@ -80,7 +83,20 @@ void ShapeState::Initialize()
 		shaderFlags, 0,
 		&shaderBlob,
 		&errorBlob);
-	if (errorBlob != nullptr && errorBlob->GetBufferPointer())
+	if (errorBlob != nullptr && errorBlob->GetBufferPointer() != nullptr)
+	{
+		LOG("%s", static_cast<const char*> (errorBlob->GetBufferPointer()));
+	}
+	ASSERT(SUCCEEDED(hr), "Failed to compile pixel shader");
+
+	hr = device->CreatePixelShader(
+		shaderBlob->GetBufferPointer(),
+		shaderBlob->GetBufferSize(),
+		nullptr,
+		&mPixelShader);
+	ASSERT(SUCCEEDED(hr), "Failed to create pixel shader");
+	SafeRelease(shaderBlob);
+	SafeRelease(errorBlob);
 
 }
 
@@ -106,7 +122,13 @@ void ShapeState::Render()
 	context->IASetInputLayout(mInputLayout);
 	context->PSSetShader(mPixelShader, nullptr, 0);
 
-	context->IASetPrimitiveTopology
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//draw
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+	context->IASetVertexBuffers(0, 1, &mVertexBuffer, &stride, &offset);
+	context->Draw(static_cast<UINT>(mVertices.size()), 0);
 }
 
 

@@ -53,7 +53,7 @@ void App::Run(const AppConfig& config)
 
 		GraphicsSystem* gs = GraphicsSystem::Get();
 		gs->BeginRender();
-		mCurrentState->Render();
+			mCurrentState->Render();
 		gs->EndRender();
 	}
 
@@ -78,3 +78,4 @@ void SpEngine::App::ChangeState(const std::string& stateName)
 		mNextState = iter->second.get();
 	}
 }
+

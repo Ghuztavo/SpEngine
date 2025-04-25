@@ -16,7 +16,7 @@
 
 
 template<class T>
-inline void SafeRealease(T*& ptr)
+inline void SafeRelease(T*& ptr)
 {
 	if (ptr != nullptr)
 	{
