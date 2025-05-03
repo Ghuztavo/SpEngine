@@ -10,10 +10,12 @@ public:
 	void Update(float deltaTime) override;
 	void Render() override;
 
-private:
+protected:
+	virtual void CreateShape();
 	struct Vertex
 	{
 		SpEngine::Math::Vector3 position;
+		SpEngine::Graphics::Color color;
 	};
 	using Vertices = std::vector<Vertex>;
 	Vertices mVertices;
@@ -22,4 +24,12 @@ private:
 	ID3D11VertexShader* mVertexShader = nullptr;
 	ID3D11InputLayout* mInputLayout = nullptr;
 	ID3D11PixelShader* mPixelShader = nullptr;
+};
+
+class TriangleShapeState : public ShapeState
+{
+public:
+	void Update(float deltaTime) override;
+protected:
+	void CreateShape() override;
 };

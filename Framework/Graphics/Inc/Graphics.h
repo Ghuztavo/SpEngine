@@ -4,3 +4,8 @@
 
 #include "GraphicsSystem.h"
 #include "Color.h"
+
+#include "MeshBuffer.h"
+#include "VertexTypes.h"
+#include "VertexShader.h"
+#include "PixelShader.h"

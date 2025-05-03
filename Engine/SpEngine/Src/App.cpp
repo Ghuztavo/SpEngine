@@ -5,6 +5,7 @@
 using namespace SpEngine;
 using namespace SpEngine::Core;
 using namespace SpEngine::Graphics;
+using namespace SpEngine::Input;
 
 void App::Run(const AppConfig& config)
 {
@@ -20,17 +21,22 @@ void App::Run(const AppConfig& config)
 	);
 	auto handle = myWindow.GetWindowHandle();
 	GraphicsSystem::StaticInitialize(handle, false);
-
+	InputSystem::StaticInitialize(handle);
 
 	//last step before running
 	ASSERT(mCurrentState != nullptr, "App: need an app state to run");
 	mCurrentState->Initialize();
-	//Process Updates
+
+	//process updates
+	
+	InputSystem* input = InputSystem::Get();
 	mRunning = true;
 	while (mRunning)
 	{
 		myWindow.ProcessMessage();
-		if (!myWindow.IsActive())
+		input->Update();
+
+		if (!myWindow.IsActive()|| input -> IsKeyPressed(KeyCode::ESCAPE))
 		{
 			Quit();
 			continue;
@@ -61,6 +67,7 @@ void App::Run(const AppConfig& config)
 	LOG("App Quit");
 	mCurrentState->Terminate();
 
+	InputSystem::StaticTerminate();
 	GraphicsSystem::StaticTerminate();
 	myWindow.Terminate();
 }
