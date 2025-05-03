@@ -26,7 +26,15 @@ protected:
 	ID3D11PixelShader* mPixelShader = nullptr;
 };
 
-class TriangleShapeState : public ShapeState
+class TriforceShapeState : public ShapeState
+{
+public:
+	void Update(float deltaTime) override;
+protected:
+	void CreateShape() override;
+};
+
+class HeartShapeState : public ShapeState
 {
 public:
 	void Update(float deltaTime) override;

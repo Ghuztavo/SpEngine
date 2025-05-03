@@ -9,7 +9,8 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 
 	SpEngine::App& myApp = SpEngine::MainApp();
 	myApp.AddState<ShapeState>("ShapeState");
-	myApp.AddState<TriangleShapeState>("TriangleShapeState");
+	myApp.AddState<TriforceShapeState>("TriforceShapeState");
+	myApp.AddState<HeartShapeState>("HeartShapeState");
 	myApp.Run(config);
 
 	return 0;

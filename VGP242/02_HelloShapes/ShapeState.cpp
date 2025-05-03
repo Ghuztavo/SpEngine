@@ -114,7 +114,11 @@ void ShapeState::Update(float deltaTime)
 {
 	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::UP))
 	{
-		SpEngine::MainApp().ChangeState("TriangleShapeState");
+		SpEngine::MainApp().ChangeState("TriforceShapeState");
+	}
+	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::RIGHT))
+	{
+		SpEngine::MainApp().ChangeState("HeartShapeState");
 	}
 }
 
@@ -138,32 +142,73 @@ void ShapeState::Render()
 void ShapeState::CreateShape() {
 	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Red });
 	mVertices.push_back({ { 0.0f, 0.75f, 0.0f }, Colors::Blue });
+	mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, Colors::Green });
+
+	mVertices.push_back({ { 0.0f, 0.75f, 0.0f }, Colors::Blue });
 	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Green });
+	mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, Colors::Red });
+
+	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Red });
+	mVertices.push_back({ { 0.0f, -0.75f, 0.0f }, Colors::Blue });
+	mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, Colors::Green });
 
 	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Red });
-	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Blue });
+	mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, Colors::Blue });
 	mVertices.push_back({ { 0.0f, -0.75f, 0.0f }, Colors::Green });
 }
 
-void TriangleShapeState::Update(float deltaTime)
+void TriforceShapeState::Update(float deltaTime)
 {
 	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::DOWN))
 	{
 		SpEngine::MainApp().ChangeState("ShapeState");
 	}
+	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::RIGHT))
+	{
+		SpEngine::MainApp().ChangeState("HeartShapeState");
+	}
 }
 
-void TriangleShapeState::CreateShape()
+void TriforceShapeState::CreateShape()
 {
-	mVertices.push_back({ { -0.75f, -0.75f, 0.0f }, Colors::Red });
-	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Blue });
-	mVertices.push_back({ { -0.25f, -0.75f, 0.0f }, Colors::Green });
+
+	mVertices.push_back({ { -0.25f, 0.0f, 0.0f }, Colors::Gold });
+	mVertices.push_back({ { 0.0f, 0.5f, 0.0f }, Colors::Gold });
+	mVertices.push_back({ { 0.25f, 0.0f, 0.0f }, Colors::Gold });
+
+	mVertices.push_back({ { -0.25f, 0.0f, 0.0f }, Colors::Gold });
+	mVertices.push_back({ { 0.0f, -0.5f, 0.0f }, Colors::DarkGoldenrod });
+	mVertices.push_back({ { -0.5f, -0.5f, 0.0f }, Colors::DarkGoldenrod });
+
+	mVertices.push_back({ { 0.25f, 0.0f, 0.0f }, Colors::Gold });
+	mVertices.push_back({ { 0.5f, -0.5f, 0.0f }, Colors::DarkGoldenrod });
+	mVertices.push_back({ { 0.0f, -0.5f, 0.0f }, Colors::DarkGoldenrod });
+	
+}
+
+void HeartShapeState::Update(float deltaTime)
+{
+	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::DOWN))
+	{
+		SpEngine::MainApp().ChangeState("ShapeState");
+	}
+	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::UP))
+	{
+		SpEngine::MainApp().ChangeState("TriforceShapeState");
+	}
+}
+
+void HeartShapeState::CreateShape()
+{
+	mVertices.push_back({ { -0.25f, 0.25f, 0.0f }, Colors::Red });
+	mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, Colors::Red });
+	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Red });
+
+	mVertices.push_back({ { 0.25f, 0.25f, 0.0f }, Colors::Red });
+	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Red });
+	mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, Colors::Red });
 
 	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Red });
-	mVertices.push_back({ { 0.0f, 0.75f, 0.0f }, Colors::Blue });
-	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Green });
-
-	mVertices.push_back({ { 0.25f, -0.75f, 0.0f }, Colors::Red });
-	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Blue });
-	mVertices.push_back({ { 0.75f, -0.75f, 0.0f }, Colors::Green });
+	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Red });
+	mVertices.push_back({ { 0.0f, -0.75f, 0.0f }, Colors::Red });
 }
