@@ -13,9 +13,9 @@ public:
 protected:
 	virtual void CreateShape();
 	
-	using Vertices = std::vector<SpEngine::Graphics::VertexPC>;
-	Vertices mVertices;
-
+	SpEngine::Graphics::MeshPC mMesh;
+	SpEngine::Graphics::Camera mCamera;
+	SpEngine::Graphics::ConstantBuffer mTransformBuffer;
 	SpEngine::Graphics::MeshBuffer mMeshBuffer;
 	SpEngine::Graphics::VertexShader mVertexShader;
 	SpEngine::Graphics::PixelShader mPixelShader;

@@ -1,20 +1,27 @@
 #include "ShapeState.h"
 
+
 using namespace SpEngine;
 using namespace SpEngine::Graphics;
 using namespace SpEngine::Math;
+using namespace SpEngine::Input;
 
-// complete-----------------------------------------------------------------------------------------------------------------------------------------
 
 void ShapeState::Initialize()
 {
+
+	mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
+	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
+
+	mTransformBuffer.Initialize(sizeof(Matrix4));
+
 	//creates a shape out of the vertices
 	CreateShape();
-	mMeshBuffer.Initialize(mVertices.data(), sizeof(VertexPC), mVertices.size());
-	//==================================================
+	mMeshBuffer.Initialize(mMesh);
+
 
 	//BIND TO FUNCTION IN SPECIFIED SHADER FILE
-	std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoColor.fx";
+	std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTransformColor.fx";
 	mVertexShader.Initialize<VertexPC>(shaderFilePath);
 	mPixelShader.Initialize(shaderFilePath);
 	
@@ -23,7 +30,8 @@ void ShapeState::Initialize()
 
 void ShapeState::Terminate()
 {
-	mVertices.clear();
+	mMesh.vertices.clear();
+	mTransformBuffer.Terminate();
 	mPixelShader.Terminate();
 	mVertexShader.Terminate();
 	mMeshBuffer.Terminate();
@@ -31,6 +39,24 @@ void ShapeState::Terminate()
 
 void ShapeState::Update(float deltaTime)
 {
+	Input::InputSystem* input = Input::InputSystem::Get();
+	const float moveSpeed = input->IsKeyDown(Input::KeyCode::LSHIFT) ? 10.0f : 1.0f;
+	const float turnSpeed = 1.0f;
+
+	if (input->IsKeyDown(Input::KeyCode::W)) mCamera.Walk(moveSpeed * deltaTime);
+	else if (input->IsKeyDown(Input::KeyCode::S)) mCamera.Walk(-moveSpeed * deltaTime);
+
+	if (input->IsKeyDown(Input::KeyCode::A)) mCamera.Strafe(-moveSpeed * deltaTime);
+	else if (input->IsKeyDown(Input::KeyCode::D)) mCamera.Strafe(moveSpeed * deltaTime);
+
+	if (input->IsKeyDown(Input::KeyCode::Q)) mCamera.Rise(-moveSpeed * deltaTime);
+	else if (input->IsKeyDown(Input::KeyCode::E)) mCamera.Rise(moveSpeed * deltaTime);
+
+	if (input->IsMouseDown(MouseButton::RBUTTON))
+	{
+		mCamera.Yaw(input->GetMouseMoveX() * turnSpeed * deltaTime);
+		mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
+	}
 }
 
 void ShapeState::Render()
@@ -39,17 +65,24 @@ void ShapeState::Render()
 	mVertexShader.Bind();
 	mPixelShader.Bind();
 
+	//sync transform buffer
+	mTransformBuffer.BindVs(0);
+
+	//update the buffer data
+	Math::Matrix4 matWorld = Math::Matrix4::Identity;
+	Math::Matrix4 matView = mCamera.GetViewMatrix();
+	Math::Matrix4 matProjection = mCamera.GetProjectionMatrix();
+	Math::Matrix4 matFinal = matWorld * matView * matProjection; //world view projection
+	Math::Matrix4 wvp = Math::Transpose(matFinal);
+	mTransformBuffer.Update(&wvp);
+
 	//draw
 	mMeshBuffer.Render();
 }
 
 void ShapeState::CreateShape() {
-	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Red });
-	mVertices.push_back({ { 0.0f, 0.75f, 0.0f }, Colors::Blue });
-	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Green });
 
-	mVertices.push_back({ { -0.5f, 0.0f, 0.0f }, Colors::Red });
-	mVertices.push_back({ { 0.5f, 0.0f, 0.0f }, Colors::Blue });
-	mVertices.push_back({ { 0.0f, -0.75f, 0.0f }, Colors::Green });
+	mMesh = MeshBuilder::CreateCubePC(1.0f);
 }
+	
 
