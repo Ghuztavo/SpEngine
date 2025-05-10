@@ -82,7 +82,12 @@ void ShapeState::Render()
 
 void ShapeState::CreateShape() {
 
-	mMesh = MeshBuilder::CreateCubePC(1.0f);
+	//cube
+	//mMesh = MeshBuilder::CreateCubePC(1.0f);
+	//pyramid
+	//mMesh = MeshBuilder::CreatePyramidPC(1.0f);
+	//rectangle
+	mMesh = MeshBuilder::CreateRectanglePC(2.0f, 1.0f, 3.0f);
 }
 	
 
