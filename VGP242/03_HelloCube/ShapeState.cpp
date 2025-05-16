@@ -87,7 +87,13 @@ void ShapeState::CreateShape() {
 	//pyramid
 	//mMesh = MeshBuilder::CreatePyramidPC(1.0f);
 	//rectangle
-	mMesh = MeshBuilder::CreateRectanglePC(2.0f, 1.0f, 3.0f);
+	//mMesh = MeshBuilder::CreateRectanglePC(2.0f, 1.0f, 3.0f);
+	//plane
+	//mMesh = MeshBuilder::CreatePlanePC(10, 10, 1.0f);
+	//cylinder
+	//mMesh = MeshBuilder::CreateCylinderPC(5, 5);
+	//sphere
+	//mMesh = MeshBuilder::CreateSpherePC(30, 30, 1.0f);
 }
 	
 
