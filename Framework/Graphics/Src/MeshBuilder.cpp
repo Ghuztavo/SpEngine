@@ -135,6 +135,19 @@ MeshPC MeshBuilder::CreateCubePC(float size)
 
 //MeshPX MeshBuilder::CreateCubePX(float size)
 //{
+//	MeshPX mesh;
+//	const float hs = 0.5f;
+//	mesh.vertices.push_back({ { -hs, -hs, -hs }, { 0.0f, 0.0f } });
+//	mesh.vertices.push_back({ { -hs,  hs, -hs }, { 0.0f, 1.0f } });
+//	mesh.vertices.push_back({ {  hs,  hs, -hs }, { 1.0f, 1.0f } });
+//	mesh.vertices.push_back({ {  hs, -hs, -hs }, { 1.0f, 0.0f } });
+//	//back
+//	mesh.vertices.push_back({ { -hs, -hs, hs }, { 0.0f, 0.0f } });
+//	mesh.vertices.push_back({ { -hs,  hs, hs }, { 0.0f, 1.0f } });
+//	mesh.vertices.push_back({ {  hs,  hs, hs }, { 1.0f, 1.0f } });
+//	mesh.vertices.push_back({ {  hs, -hs, hs }, { 1.0f, 0.0f } });
+//	CreateCubeIndices(mesh.indices);
+//	return mesh;
 //
 //}
 

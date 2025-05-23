@@ -101,6 +101,8 @@ void ShapeState::CreateShape() {
 	//sphere
 	//mMesh = MeshBuilder::CreateSpherePC(30, 30, 1.0f);
 
+	//cube px
+	//mMesh = MeshBuilder::CreateCubePX(1.0f);
 	// sphere with texture
 	//mMesh = MeshBuilder::CreateSpherePX(30, 30, 1.0f);
 	// plane with texture

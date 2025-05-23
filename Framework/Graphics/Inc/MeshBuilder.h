@@ -11,7 +11,7 @@ namespace SpEngine::Graphics
 		//cube
 		static MeshPC CreateCubePC(float size, const Color& color);
 		static MeshPC CreateCubePC(float size);
-		/*static MeshPX CreateCubePX(float size);*/
+		//static MeshPX CreateCubePX(float size);
 
 		//pyramid
 		static MeshPC CreatePyramidPC(float size);
