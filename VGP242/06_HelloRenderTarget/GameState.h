@@ -35,6 +35,7 @@ private:
 	//render object
 	Object mObject;
 	Object mObject2;
+	Object mObject3;
 
 	//render target
 	SpEngine::Graphics::RenderTarget mRenderTarget;

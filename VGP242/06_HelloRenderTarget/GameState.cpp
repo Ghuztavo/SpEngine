@@ -4,6 +4,16 @@ using namespace SpEngine;
 using namespace SpEngine::Graphics;
 using namespace SpEngine::Input;
 
+enum class SphereRenderTarget
+{
+	Sun,
+	Earth,
+	Void
+};
+SphereRenderTarget gCurrentSphere = SphereRenderTarget::Sun;
+
+const char* gSphereNames[] = { "Sun", "Earth", "Void"};
+
 void GameState::Initialize() 
 {
 	mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
@@ -24,11 +34,14 @@ void GameState::Initialize()
 	MeshPX sphere = MeshBuilder::CreateSpherePX(60, 60, 1.0f);
 	mObject.meshBuffer.Initialize(sphere);
 	mObject2.meshBuffer.Initialize(sphere);
+	mObject3.meshBuffer.Initialize(sphere);
 
 
 	mObject.textureId = TextureManager::Get()->LoadTexture(L"sun.jpg");
 	mObject2.textureId = TextureManager::Get()->LoadTexture(L"earth.jpg");
-	mObject2.worldMat = Math::Matrix4::Translation(0.0f, 1.0f, 0.0f);
+	mObject3.textureId = TextureManager::Get()->LoadTexture(L"space.jpg");
+	mObject2.worldMat = Math::Matrix4::Translation(4.0f, 0.0f, 0.0f);
+	mObject3.worldMat = Math::Matrix4::Translation(-4.0f, 0.0f, 0.0f);
 
 	constexpr uint32_t size = 512;
 	mRenderTarget.Initialize(size, size, RenderTarget::Format::RGBA_U32);
@@ -40,8 +53,10 @@ void GameState::Terminate()
 	mRenderTarget.Terminate();
 	TextureManager::Get()->ReleaseTexture(mObject.textureId);
 	TextureManager::Get()->ReleaseTexture(mObject2.textureId);
+	TextureManager::Get()->ReleaseTexture(mObject3.textureId);
 	mObject.meshBuffer.Terminate();
 	mObject2.meshBuffer.Terminate();
+	mObject3.meshBuffer.Terminate();
 	mTransformBuffer.Terminate();
 	mSampler.Terminate();
 	mPixelShader.Terminate();
@@ -60,13 +75,34 @@ void GameState::Render()
 
 	//render to render target
 	mRenderTarget.BeginRender();
+	if (gCurrentSphere == SphereRenderTarget::Sun)
+	{
 		RenderObject(mObject, mRenderTargetCamera);
+		mRenderTargetCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
+		mRenderTargetCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
+	}
+	else if (gCurrentSphere == SphereRenderTarget::Earth)
+	{
 		RenderObject(mObject2, mRenderTargetCamera);
+		mRenderTargetCamera.SetPosition({ 4.0f, 1.0f, -3.0f });
+		mRenderTargetCamera.SetLookAt({ 4.0f, 0.0f, 0.0f });
+	}
+	else if (gCurrentSphere == SphereRenderTarget::Void)
+	{
+		RenderObject(mObject3, mRenderTargetCamera);
+		mRenderTargetCamera.SetPosition({ -4.0f, 1.0f, -3.0f });
+		mRenderTargetCamera.SetLookAt({ -4.0f, 0.0f, 0.0f });
+	}
+	else
+	{
+		RenderObject(mObject, mRenderTargetCamera);
+	}
 	mRenderTarget.EndRender();
 
 	//render the scene
 	RenderObject(mObject, mCamera);
 	RenderObject(mObject2, mCamera);
+	RenderObject(mObject3, mCamera);
 }
 
 void GameState::RenderObject(const Object& object, const SpEngine::Graphics::Camera& camera)
@@ -86,111 +122,16 @@ void GameState::RenderObject(const Object& object, const SpEngine::Graphics::Cam
 	object.meshBuffer.Render();
 }
 
-// shapes values
-//cube
-bool filled = false;
-Math::Vector3 cubeV0 = Math::Vector3::Zero;
-Math::Vector3 cubeV1 = Math::Vector3::One;
-Color cubeColor = Colors::White;
-
-//sphere
-int sphereSlices = 60;
-int sphereRings = 60;
-float sphereRadius = 1.0f;
-Color sphereColor = Colors::White;
-Math::Vector3 sphereOrigin = Math::Vector3::Zero;
-
-//ground plane
-int gIntValue = 10.0f;
-Color gColor = Colors::White;
-
-//ground circle
-int gCircleSlices = 60;
-float gCircleRadius = 10.0f;
-Color gCircleColor = Colors::White;
-Math::Vector3 gCircleOrigin = Math::Vector3::Zero;
-
-
-enum class Shape
-{
-	None,
-	AABB,
-	Sphere,
-	GroundPlane,
-	GroundCircle,
-	Transform
-};
-const char* gShapeNames[] = { "None", "AABB", "Sphere", "GroundPlane", "GroundCircle", "Transform" };
-
-Shape gCurrentShape = Shape::None;
 void GameState::DebugUI()
 {
+	
 	ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-	ImGui::Text("Choose a shape");
+	ImGui::Text("Choose object to render");
 
-	int currentShape = (int)gCurrentShape;
-	if (ImGui::Combo("Shape", &currentShape, gShapeNames, std::size(gShapeNames)))
+	int currentSphere = (int)gCurrentSphere;
+	if (ImGui::Combo("Planet", &currentSphere, gSphereNames, std::size(gSphereNames)))
 	{
-		gCurrentShape = (Shape)currentShape;
-	}
-
-	switch (gCurrentShape)
-	{
-	case Shape::None: break;
-	case Shape::AABB:
-	{
-		ImGui::Text("AABB");
-		ImGui::Checkbox("Filled", &filled);
-		ImGui::DragFloat3("V0", &cubeV0.x, 0.1);
-		ImGui::DragFloat3("V1", &cubeV1.x, 0.1);
-		ImGui::ColorEdit4("Color", &cubeColor.r);
-		if (filled)
-		{
-			SimpleDraw::AddFilledAABB(cubeV0, cubeV1, cubeColor);
-		}
-		else
-		{
-			SimpleDraw::AddAABB(cubeV0, cubeV1, cubeColor);
-		}
-		break;
-	}
-	case Shape::Sphere:
-		{
-
-		ImGui::Text("Sphere");
-		ImGui::DragInt("Slices", &sphereSlices, 1, 3, 100);
-		ImGui::DragInt("Rings", &sphereRings, 1, 3, 100);
-		ImGui::DragFloat("Radius", &sphereRadius, 0.1f, 0.1f, 100.0f);
-		ImGui::ColorEdit4("Color", &sphereColor.r);
-		ImGui::DragFloat3("Origin", &sphereOrigin.x, 0.1f);
-
-		SimpleDraw::AddSphere(sphereSlices, sphereRings, sphereRadius, sphereColor, sphereOrigin);
-
-		break;
-		}
-	case Shape::GroundPlane:
-		{
-		ImGui::Text("Ground Plane");
-		ImGui::DragInt("Size", &gIntValue, 1, 1, 100);
-		ImGui::ColorEdit4("Color", &gColor.r);
-		SimpleDraw::AddGroundPlane(gIntValue, gColor);
-		break;
-		}
-	case Shape::GroundCircle:
-		{
-		ImGui::Text("Ground Circle");
-		ImGui::DragInt("Slices", &gCircleSlices, 1, 3, 100);
-		ImGui::DragFloat("Radius", &gCircleRadius, 0.1f, 0.1f, 100.0f);
-		ImGui::ColorEdit4("Color", &gCircleColor.r);
-		ImGui::DragFloat3("Origin", &gCircleOrigin.x, 0.1f);
-		SimpleDraw::AddGroundCircle(gCircleSlices, gCircleRadius, gCircleColor, gCircleOrigin);
-
-			break;
-		}
-	case Shape::Transform:
-		{
-			SimpleDraw::AddTransform(Math::Matrix4::Identity);
-		}
+		gCurrentSphere = (SphereRenderTarget)currentSphere;
 	}
 
 	ImGui::Separator();
