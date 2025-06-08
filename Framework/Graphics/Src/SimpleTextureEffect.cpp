@@ -39,6 +39,7 @@ void SimpleTextureEffect::End()
 
 void SimpleTextureEffect::Render(const SimpleTextureEffect::RenderData& renderData)
 {
+	
 	ASSERT(mCamera != nullptr, "SimpleTextureEffect: must have a camera");
 	const Math::Matrix4 matView = mCamera->GetViewMatrix();
 	const Math::Matrix4 matProj = mCamera->GetProjectionMatrix();

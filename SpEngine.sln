@@ -49,6 +49,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_HelloRenderTarget", "VGP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_HelloSimpleTextureEffect", "VGP242\07_HelloSimpleTextureEffect\07_HelloSimpleTextureEffect.vcxproj", "{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_SolarSystem", "VGP242\11_SolarSystem\11_SolarSystem.vcxproj", "{63862164-8E1C-4C3A-B719-6C83726A6F34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -169,6 +171,14 @@ Global
 		{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC}.Release|x64.Build.0 = Release|x64
 		{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC}.Release|x86.ActiveCfg = Release|Win32
 		{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC}.Release|x86.Build.0 = Release|Win32
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Debug|x64.ActiveCfg = Debug|x64
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Debug|x64.Build.0 = Debug|x64
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Debug|x86.ActiveCfg = Debug|Win32
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Debug|x86.Build.0 = Debug|Win32
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x64.ActiveCfg = Release|x64
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x64.Build.0 = Release|x64
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x86.ActiveCfg = Release|Win32
+		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,6 +199,7 @@ Global
 		{25558A42-A1E0-4E8B-AE53-CC4B3C8CF192} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
 		{B70DF43E-715E-4232-B1D1-A1556BA69311} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
 		{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
+		{63862164-8E1C-4C3A-B719-6C83726A6F34} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87150F32-FC9B-48A9-A17A-901EC686C93E}
