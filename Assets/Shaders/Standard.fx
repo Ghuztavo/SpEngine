@@ -71,7 +71,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
     float s = pow(base, 10.0f);
     float4 specular = s * lightSpecular;
     
-    float4 finalColor = (emissive + ambient + diffuse + diffuse + specular);
+    float4 finalColor = (emissive + ambient + diffuse + specular);
     
     return finalColor;
 }

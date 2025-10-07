@@ -32,7 +32,7 @@ void StandardEffect::Begin()
 	mPixelShader.Bind();
 
 	mTransformBuffer.BindVs(0);
-	mLightBuffer.BindVs(0);
+	mLightBuffer.BindVs(1);
 	mLightBuffer.BindPs(1);
 
 }
@@ -44,7 +44,7 @@ void StandardEffect::End()
 
 void StandardEffect::Render(const RenderObject& renderObject)
 {
-	const Math::Matrix4 matWorld = renderObject.transform.GetMatrix();
+	const Math::Matrix4 matWorld = renderObject.transform.GetMatrix4();
 	const Math::Matrix4 matView = mCamera->GetViewMatrix();
 	const Math::Matrix4 matProj = mCamera->GetProjectionMatrix();
 	const Math::Matrix4 matFinal = matWorld * matView * matProj;

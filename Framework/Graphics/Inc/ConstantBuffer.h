@@ -11,7 +11,7 @@ namespace SpEngine::Graphics
 		void Initialize(uint32_t bufferSize);
 		void Terminate();
 
-		void Update(const void* data);
+		void Update(const void* data) const;
 		
 		void BindVs(uint32_t slot) const;
 		void BindPs(uint32_t slot) const;

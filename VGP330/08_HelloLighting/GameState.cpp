@@ -4,22 +4,12 @@ using namespace SpEngine;
 using namespace SpEngine::Graphics;
 using namespace SpEngine::Input;
 
-enum class SphereRenderTarget
-{
-	Sun,
-	Earth,
-	Void
-};
-SphereRenderTarget gCurrentSphere = SphereRenderTarget::Sun;
-
-const char* gSphereNames[] = { "Sun", "Earth", "Void"};
-
 void GameState::Initialize() 
 {
 	mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
-	mDirectionalLight.direction = Math::Vector3({ 1.0f, -1.0f, 1.0f });
+	mDirectionalLight.direction = Math::Normalize({ 1.0f, -1.0f, 1.0f });
 	mDirectionalLight.ambient = { 0.4f, 0.4f, 0.4f, 1.0f };
 	mDirectionalLight.diffuse = { 0.7f, 0.7f, 0.7f, 1.0f };
 	mDirectionalLight.specular = { 0.9f, 0.9f, 0.9f, 1.0f };

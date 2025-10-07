@@ -8,7 +8,7 @@ namespace SpEngine::Graphics
 		Math::Quaternion rotation = Math::Quaternion::Identity;
 		Math::Vector3 scale = Math::Vector3::One;
 
-		Math::Matrix4 GetMatrix() const
+		Math::Matrix4 GetMatrix4() const
 		{
 			// scale * rotation * translation
 			return {

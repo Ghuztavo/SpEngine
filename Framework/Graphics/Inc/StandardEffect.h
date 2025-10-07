@@ -3,7 +3,6 @@
 #include "ConstantBuffer.h"
 #include "Pixelshader.h"
 #include "VertexShader.h"
-#include "VertexShader.h"
 #include "DirectionalLight.h"
 
 namespace SpEngine::Graphics
