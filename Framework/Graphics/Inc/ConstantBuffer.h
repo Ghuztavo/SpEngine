@@ -16,8 +16,23 @@ namespace SpEngine::Graphics
 		void BindVs(uint32_t slot) const;
 		void BindPs(uint32_t slot) const;
 
-
 	private:
 		ID3D11Buffer* mConstantBuffer = nullptr;
+	};
+
+	template <class DataType>
+	class TypedconstantBuffer final : public ConstantBuffer
+	{
+	public:
+		void Initialize()
+		{
+			static_assert(sizeof(DataType) % 16 == 0, "Data must be 16 bytes aligned");
+			ConstantBuffer::Initialize(sizeof(DataType));
+
+		}
+		void Update(const DataType& data) const
+		{
+			ConstantBuffer::Update(&data);
+		}
 	};
 }

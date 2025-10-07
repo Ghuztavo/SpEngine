@@ -21,3 +21,7 @@
 #include "SimpleDraw.h"
 #include "SimpleTextureEffect.h"
 #include "RenderTarget.h"
+#include "RenderObject.h"
+#include "Transform.h"
+#include "StandardEffect.h"
+#include "DirectionalLight.h"

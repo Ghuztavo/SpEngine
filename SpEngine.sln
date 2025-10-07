@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{FBA8
 		Assets\Shaders\DoSomething.fx = Assets\Shaders\DoSomething.fx
 		Assets\Shaders\DoTexture.fx = Assets\Shaders\DoTexture.fx
 		Assets\Shaders\DoTransformColor.fx = Assets\Shaders\DoTransformColor.fx
+		Assets\Shaders\Standard.fx = Assets\Shaders\Standard.fx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Input", "Framework\Input\Input.vcxproj", "{3629F01A-6FED-42EB-B308-E9F7F1346EAF}"
@@ -50,6 +51,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_HelloSimpleTextureEffect", "VGP242\07_HelloSimpleTextureEffect\07_HelloSimpleTextureEffect.vcxproj", "{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_SolarSystem", "VGP242\11_SolarSystem\11_SolarSystem.vcxproj", "{63862164-8E1C-4C3A-B719-6C83726A6F34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VGP330", "VGP330", "{9DA5BF8F-21DB-44BD-88F9-92BC92A5F027}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "08_HelloLighting", "VGP330\08_HelloLighting\08_HelloLighting.vcxproj", "{0654ABBD-C439-4AA9-9F30-670FA6EC218F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +184,14 @@ Global
 		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x64.Build.0 = Release|x64
 		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x86.ActiveCfg = Release|Win32
 		{63862164-8E1C-4C3A-B719-6C83726A6F34}.Release|x86.Build.0 = Release|Win32
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Debug|x64.ActiveCfg = Debug|x64
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Debug|x64.Build.0 = Debug|x64
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Debug|x86.ActiveCfg = Debug|Win32
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Debug|x86.Build.0 = Debug|Win32
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Release|x64.ActiveCfg = Release|x64
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Release|x64.Build.0 = Release|x64
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Release|x86.ActiveCfg = Release|Win32
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,6 +213,7 @@ Global
 		{B70DF43E-715E-4232-B1D1-A1556BA69311} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
 		{FBD40C5A-CFF0-4786-9C10-EF5C67F395DC} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
 		{63862164-8E1C-4C3A-B719-6C83726A6F34} = {4EE3AB0A-ECA5-4EBE-9913-74B43A134A5F}
+		{0654ABBD-C439-4AA9-9F30-670FA6EC218F} = {9DA5BF8F-21DB-44BD-88F9-92BC92A5F027}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87150F32-FC9B-48A9-A17A-901EC686C93E}
