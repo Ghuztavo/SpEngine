@@ -25,3 +25,4 @@
 #include "Transform.h"
 #include "StandardEffect.h"
 #include "DirectionalLight.h"
+#include "Material.h"

@@ -4,6 +4,8 @@
 #include "Pixelshader.h"
 #include "VertexShader.h"
 #include "DirectionalLight.h"
+#include "Material.h"
+#include "Sampler.h"
 
 namespace SpEngine::Graphics
 {
@@ -35,16 +37,34 @@ namespace SpEngine::Graphics
 			float padding = 0.0f; // padding to maintain 16 byte alignment
 		};
 
+		struct SettingsData
+		{
+			int useDiffuseMap = 1;
+			int useSpecMap = 1;
+			int useNormalMap = 1;
+			int useBumpMap = 1;
+			float bumpWeight = 0.1f;
+			float padding[3] = { 0.0f };
+		};
+
 		using TransformBuffer = TypedconstantBuffer<TransformData>;
 		TransformBuffer mTransformBuffer;
 
 		using LightBuffer = TypedconstantBuffer<DirectionalLight>;
 		LightBuffer mLightBuffer;
 
+		using MaterialBurffer = TypedconstantBuffer<Material>;
+		MaterialBurffer mMaterialBuffer;
+
+		using SettingsBuffer = TypedconstantBuffer<SettingsData>;
+		SettingsBuffer mSettingsBuffer;
+
 		VertexShader mVertexShader;
 		PixelShader mPixelShader;
+		Sampler mSampler;
 
 		const Camera* mCamera = nullptr;
 		const DirectionalLight* mDirectionalLight = nullptr;
+		SettingsData mSettingsData;
 	};
 }
