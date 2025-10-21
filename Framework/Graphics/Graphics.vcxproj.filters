@@ -87,6 +87,7 @@
     <ClInclude Include="Inc\Material.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Model.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
