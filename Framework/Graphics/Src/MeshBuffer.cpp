@@ -90,7 +90,7 @@ void MeshBuffer::CreateVertexBuffer(const void* vertices, uint32_t vertexSize, u
 	initData.pSysMem = vertices;
 
 	HRESULT hr = device->CreateBuffer(&bufferDesc, (isDynamic? nullptr : &initData), &mVertexBuffer);
-	ASSERT(SUCCEEDED(hr), "Fauled to create vertex buffer");
+	ASSERT(SUCCEEDED(hr), "Failed to create vertex buffer");
 }
 
 void MeshBuffer::CreateIndexBuffer(const void* indices, uint32_t indexCount)
