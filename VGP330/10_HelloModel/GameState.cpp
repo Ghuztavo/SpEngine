@@ -16,6 +16,10 @@ void GameState::Initialize()
 	mDirectionalLight.specular = { 0.9f, 0.9f, 0.9f, 1.0f };
 
 	mCharacter.Initialize(L"Character01/Character01.model");
+	mCharacter2.Initialize(L"Character02/Character02.model");
+	mCharacter2.transform.position = { -2.0f, 0.0f, 0.0f };
+	mCharacter3.Initialize(L"Character03/Character03.model");
+	mCharacter3.transform.position = { 2.0f, 0.0f, 0.0f };
 
 
 	std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
@@ -27,6 +31,8 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
 	mCharacter.Terminate();
+	mCharacter2.Terminate();
+	mCharacter3.Terminate();
 	mStandardEffect.Terminate();
 }
 
@@ -42,6 +48,8 @@ void GameState::Render()
 	
 	mStandardEffect.Begin();
 	mStandardEffect.Render(mCharacter);
+	mStandardEffect.Render(mCharacter2);
+	mStandardEffect.Render(mCharacter3);
 	mStandardEffect.End();
 }
 

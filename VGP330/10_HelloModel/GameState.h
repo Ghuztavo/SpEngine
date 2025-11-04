@@ -19,6 +19,8 @@ private:
 	SpEngine::Graphics::DirectionalLight mDirectionalLight;
 
 	SpEngine::Graphics::RenderGroup mCharacter;
+	SpEngine::Graphics::RenderGroup mCharacter2;
+	SpEngine::Graphics::RenderGroup mCharacter3;
 
 	SpEngine::Graphics::StandardEffect mStandardEffect;
 	
