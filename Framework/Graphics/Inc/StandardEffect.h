@@ -49,16 +49,16 @@ namespace SpEngine::Graphics
 			float padding[3] = { 0.0f };
 		};
 
-		using TransformBuffer = TypedconstantBuffer<TransformData>;
+		using TransformBuffer = TypedConstantBuffer<TransformData>;
 		TransformBuffer mTransformBuffer;
 
-		using LightBuffer = TypedconstantBuffer<DirectionalLight>;
+		using LightBuffer = TypedConstantBuffer<DirectionalLight>;
 		LightBuffer mLightBuffer;
 
-		using MaterialBurffer = TypedconstantBuffer<Material>;
+		using MaterialBurffer = TypedConstantBuffer<Material>;
 		MaterialBurffer mMaterialBuffer;
 
-		using SettingsBuffer = TypedconstantBuffer<SettingsData>;
+		using SettingsBuffer = TypedConstantBuffer<SettingsData>;
 		SettingsBuffer mSettingsBuffer;
 
 		VertexShader mVertexShader;

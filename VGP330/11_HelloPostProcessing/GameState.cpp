@@ -7,8 +7,8 @@ using namespace SpEngine::Input;
 
 void GameState::Initialize() 
 {
-	mCamera.SetPosition({ 0.0f, 2.0f, -3.0f });
-	mCamera.SetLookAt({ 0.0f, 1.0f, 0.0f });
+	mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
+	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
 	mDirectionalLight.direction = Math::Normalize({ 1.0f, -1.0f, 1.0f });
 	mDirectionalLight.ambient = { 0.4f, 0.4f, 0.4f, 1.0f };
@@ -16,24 +16,42 @@ void GameState::Initialize()
 	mDirectionalLight.specular = { 0.9f, 0.9f, 0.9f, 1.0f };
 
 	mCharacter.Initialize(L"Character01/Character01.model");
-	mCharacter2.Initialize(L"Character02/Character02.model");
-	mCharacter2.transform.position = { -2.0f, 0.0f, 0.0f };
-	mCharacter3.Initialize(L"Character03/Character03.model");
-	mCharacter3.transform.position = { 2.0f, 0.0f, 0.0f };
+
+	Mesh groundMesh = MeshBuilder::CreatePlane(10, 10, 1.0f);
+	mGround.meshBuffer.Initialize(groundMesh);
+	mGround.diffuseMapId = TextureManager::Get()->LoadTexture(L"misc/concrete.jpg");
+
+	MeshPX screenQuad = MeshBuilder::CreateScreenQuadPX();
+	mScreenQuad.meshBuffer.Initialize(screenQuad);
 
 
 	std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
 	mStandardEffect.Initialize(shaderFile);
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
+
+	shaderFile = L"../../Assets/Shaders/PostProcessing.fx";
+	mPostProcessingEffect.Initialize(shaderFile);
+	mPostProcessingEffect.SetTexture(&mRenderTarget);
+	mPostProcessingEffect.SetTexture(&mCombineTexture, 1);
+
+	Graphics::GraphicsSystem* gs = GraphicsSystem::Get();
+	const uint32_t screenWidth = gs->GetBackBufferWidth();
+	const uint32_t screenHeight = gs->GetBackBufferHeight();
+	mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
+
+	mCombineTexture.Initialize(L"../../Assets/Textures/water/water_texture.jpg");
 }
 
 void GameState::Terminate()
 {
+	mCombineTexture.Terminate();
 	mCharacter.Terminate();
-	mCharacter2.Terminate();
-	mCharacter3.Terminate();
+	mScreenQuad.Terminate();
+	mGround.Terminate();
 	mStandardEffect.Terminate();
+	mPostProcessingEffect.Terminate();
+	mRenderTarget.Terminate();
 }
 
 void GameState::Update(float deltaTime)
@@ -43,14 +61,16 @@ void GameState::Update(float deltaTime)
 
 void GameState::Render()
 {
-	SimpleDraw::AddGroundPlane(20.0f, Colors::White);
-	SimpleDraw::Render(mCamera);
-	
-	mStandardEffect.Begin();
-	mStandardEffect.Render(mCharacter);
-	mStandardEffect.Render(mCharacter2);
-	mStandardEffect.Render(mCharacter3);
-	mStandardEffect.End();
+	mRenderTarget.BeginRender();
+		mStandardEffect.Begin();
+			mStandardEffect.Render(mCharacter);
+			mStandardEffect.Render(mGround);
+		mStandardEffect.End();
+	mRenderTarget.EndRender();
+
+	mPostProcessingEffect.Begin();
+		mPostProcessingEffect.Render(mScreenQuad);
+	mPostProcessingEffect.End();
 }
 
 void GameState::DebugUI()
@@ -86,10 +106,18 @@ void GameState::DebugUI()
 			}
 			ImGui::PopID();
 		}
+		
 	}
-
-	
+	ImGui::Separator();
+	ImGui::Text("Render Target:");
+	ImGui::Image(mRenderTarget.GetRawData(), 
+		{ 128, 128 },
+		{ 0,0 },
+		{ 1, 1 },
+		{ 1, 1, 1, 1 },
+		{ 1, 1, 1, 1 });
 	mStandardEffect.DebugUI();
+	mPostProcessingEffect.DebugUI();
 	ImGui::End();
 }
 
@@ -113,5 +141,4 @@ void GameState::UpdateCamera(float deltaTime)
 		mCamera.Yaw(input->GetMouseMoveX() * turnSpeed * deltaTime);
 		mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
 	}
-	//salmon was here puto el que lo lea
 }

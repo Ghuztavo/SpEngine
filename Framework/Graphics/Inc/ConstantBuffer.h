@@ -21,7 +21,7 @@ namespace SpEngine::Graphics
 	};
 
 	template <class DataType>
-	class TypedconstantBuffer final : public ConstantBuffer
+	class TypedConstantBuffer final : public ConstantBuffer
 	{
 	public:
 		void Initialize()
