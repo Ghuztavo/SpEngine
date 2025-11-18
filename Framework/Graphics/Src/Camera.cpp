@@ -156,7 +156,7 @@ Math::Matrix4 Camera::GetOrthographicMatrix() const
 	return {
 		2.0f/w,   0.0f,        0.0f, 0.0f,
 		  0.0f, 2.0f/h,        0.0f, 0.0f,
-		  0.0f,   0.0f, -1.0f/(f-n), 1.0f,
-		  0.0f,   0.0f,     n/(n-f), 0.0f
+		  0.0f,   0.0f, 1.0f/(f-n), 0.0f,
+		  0.0f,   0.0f,     n/(n-f), 1.0f
 	};
 }
