@@ -21,7 +21,8 @@ namespace
 		"Combine2",
 		"MotionBlur",
 		"ChromaticAberration",
-		"Wave"
+		"Wave",
+		"FilmGrain"
 	};
 }
 
@@ -40,6 +41,11 @@ void PostProcessingEffect::Terminate()
 	mPixelShader.Terminate();
 	mVertexShader.Terminate();
 
+}
+
+void PostProcessingEffect::Update(float deltaTime)
+{
+	mTime += deltaTime;
 }
 
 void PostProcessingEffect::Begin()
@@ -94,6 +100,13 @@ void PostProcessingEffect::Begin()
 	{
 		data.param0 = mWaveLength;
 		data.param1 = mNumWaves;
+	}
+	break;
+	case Mode::FilmGrain:
+	{
+		data.param0 = mGrainIntensity;
+		data.param1 = mTime;
+		data.param2 = mGrainScale;
 	}
 	break;
 	default:
@@ -158,6 +171,11 @@ void PostProcessingEffect::DebugUI()
 		{
 			ImGui::DragFloat("WaveLength", &mWaveLength, 0.001f, 0.0f, 1.0f);
 			ImGui::DragFloat("NumWaves", &mNumWaves, 1.0f, 0.0f, 1000.0f);
+		}
+		else if (mMode == Mode::FilmGrain)
+		{
+			ImGui::DragFloat("Intensity", &mGrainIntensity, 0.01f, 0.0f, 5.0f);
+			ImGui::DragFloat("Scale", &mGrainScale, 0.1f, 1.0f, 100.0f);
 		}
 	}
 }

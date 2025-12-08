@@ -23,11 +23,14 @@ namespace SpEngine::Graphics
 			Combine2,
 			MotionBlur,
 			ChromaticAberration,
-			Wave
+			Wave,
+			FilmGrain
 		};
 
 		void Initialize(const std::filesystem::path& filePath);
 		void Terminate();
+
+		void Update(float deltaTime);
 
 		void Begin();
 		void End();
@@ -65,5 +68,9 @@ namespace SpEngine::Graphics
 		float mAberrationValue = 0.005f;
 		float mWaveLength = 0.05f;
 		float mNumWaves = 20.0f;
+
+		float mGrainIntensity = 0.5f;
+		float mGrainScale = 20.0f;
+		float mTime = 0.0f;
 	};
 }

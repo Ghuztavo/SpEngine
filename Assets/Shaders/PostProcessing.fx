@@ -10,9 +10,23 @@ cbuffer PostProcessBuffer : register(b0)
 Texture2D textureMap0 : register(t0);
 Texture2D textureMap1 : register(t1);
 Texture2D textureMap2 : register(t2);
-Texture2D texutreMap3 : register(t3);
+Texture2D textureMap3 : register(t3);
 
 SamplerState textureSampler : register(s0);
+
+// cheap 1D hash from a float2 -> [0,1)
+float hash(float2 p)
+{
+    // constants chosen to produce decent randomness
+    return frac(sin(dot(p, float2(127.1, 311.7))) * 43758.5453);
+}
+
+// optional: 2D hash -> float2 (useful for randomized offsets)
+float2 hash2(float2 p)
+{
+    return frac(sin(float2(dot(p, float2(127.1, 311.7)),
+                           dot(p, float2(269.5, 183.3)))) * 43758.5453);
+}
 
 struct VS_INPUT
 {
@@ -68,7 +82,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
         + textureMap0.Sample(textureSampler, float2(u + param0, v))
         + textureMap0.Sample(textureSampler, float2(u - param0, v))
         + textureMap0.Sample(textureSampler, float2(u, v + param1))
-        + textureMap0.Sample(textureSampler, float2(u, v - param1));
+        + textureMap0.Sample(textureSampler, float2(u, v - param1))
         + textureMap0.Sample(textureSampler, float2(u + param0, v + param1))
         + textureMap0.Sample(textureSampler, float2(u + param0, v - param1))
         + textureMap0.Sample(textureSampler, float2(u - param0, v + param1))
@@ -98,7 +112,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
         + textureMap0.Sample(textureSampler, float2(u + p0, v))
         + textureMap0.Sample(textureSampler, float2(u - p0, v))
         + textureMap0.Sample(textureSampler, float2(u, v + p1))
-        + textureMap0.Sample(textureSampler, float2(u, v - p1));
+        + textureMap0.Sample(textureSampler, float2(u, v - p1))
         + textureMap0.Sample(textureSampler, float2(u + p0, v + p1))
         + textureMap0.Sample(textureSampler, float2(u + p0, v - p1))
         + textureMap0.Sample(textureSampler, float2(u - p0, v + p1))
@@ -120,7 +134,33 @@ float4 PS(VS_OUTPUT input) : SV_Target
         float2 texCoord = input.texCoord;
         texCoord.y += sin(waveValue) * param0;
         finalColor = textureMap0.Sample(textureSampler, texCoord);
+    }
+    else if (mode == 9) // Film Grain
+    {
+        // Simple monochrome procedural grain
+        
+        float4 color = textureMap0.Sample(textureSampler, input.texCoord);
 
+        // Use hash on the scaled UV and time to get a per-frame random value
+        float n = hash(input.texCoord * param2 + float2(param1, param1 * 1.37));
+        n = n * 2.0f - 1.0f;
+
+        float grainFactor = 1.0f + n * param0;
+        finalColor = color * grainFactor;
+        
+        
+        // ---------------------------------------------------------------------------------
+        // Per-channel procedural grain (more film-like)
+        
+        //float4 color = textureMap0.Sample(textureSampler, input.texCoord);
+
+        //float nr = hash(input.texCoord * param2 + float2(param1 * 1.00, param1 * 1.11));
+        //float ng = hash(input.texCoord * param2 + float2(param1 * 1.73, param1 * 1.19));
+        //float nb = hash(input.texCoord * param2 + float2(param1 * 2.31, param1 * 0.83));
+
+        //float3 grain = float3(nr, ng, nb) * 2.0f - 1.0f;
+        //finalColor.rgb = color.rgb * (1.0f + grain * param0);
+        //finalColor.a = color.a;
     }
     return finalColor;
     
