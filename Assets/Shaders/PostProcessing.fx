@@ -17,15 +17,8 @@ SamplerState textureSampler : register(s0);
 // cheap 1D hash from a float2 -> [0,1)
 float hash(float2 p)
 {
-    // constants chosen to produce decent randomness
+    // constants chosen to produce randomness
     return frac(sin(dot(p, float2(127.1, 311.7))) * 43758.5453);
-}
-
-// optional: 2D hash -> float2 (useful for randomized offsets)
-float2 hash2(float2 p)
-{
-    return frac(sin(float2(dot(p, float2(127.1, 311.7)),
-                           dot(p, float2(269.5, 183.3)))) * 43758.5453);
 }
 
 struct VS_INPUT
@@ -137,7 +130,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
     }
     else if (mode == 9) // Film Grain
     {
-        // Simple monochrome procedural grain
+        // monochrome procedural grain
         
         float4 color = textureMap0.Sample(textureSampler, input.texCoord);
 
@@ -150,7 +143,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
         
         
         // ---------------------------------------------------------------------------------
-        // Per-channel procedural grain (more film-like)
+        // Per-channel procedural grain
         
         //float4 color = textureMap0.Sample(textureSampler, input.texCoord);
 

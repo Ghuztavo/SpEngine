@@ -7,8 +7,8 @@ using namespace SpEngine::Input;
 
 void GameState::Initialize() 
 {
-	mCamera.SetPosition({ 0.0f, 21.0f, -3.0f });
-	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
+	mCamera.SetPosition({ 150.0f, 30.0f, 115.0f });
+	mCamera.SetLookAt({ 150.0f, 30.0f, 120.0f });
 
 	mDirectionalLight.direction = Math::Normalize({ 1.0f, -1.0f, 1.0f });
 	mDirectionalLight.ambient = { 0.4f, 0.4f, 0.4f, 1.0f };
@@ -17,11 +17,11 @@ void GameState::Initialize()
 
 	// Characters
 	mCharacter.Initialize(L"Character01/Character01.model");
-	mCharacter.transform.position = { 0.0f, 20.0f, 0.0f };
+	mCharacter.transform.position = { 150.0f, 20.0f, 120.0f };
 	mCharacter2.Initialize(L"Character02/Character02.model");
-	mCharacter2.transform.position = { -2.0f, 20.0f, 0.0f };
+	mCharacter2.transform.position = { 148.0f, 20.0f, 120.0f };
 	mCharacter3.Initialize(L"Character03/Character03.model");
-	mCharacter3.transform.position = { 2.0f, 20.0f, 0.0f };
+	mCharacter3.transform.position = { 152.0f, 20.0f, 120.0f };
 
 	// Shapes
 	// Sphere 1
@@ -32,7 +32,7 @@ void GameState::Initialize()
 	mRenderObject.specMapId = tm->LoadTexture(L"earth_spec.jpg");
 	mRenderObject.normalMapId = tm->LoadTexture(L"earth_normal.jpg");
 	mRenderObject.bumpMapId = tm->LoadTexture(L"earth_bump.jpg");
-	mRenderObject.transform.position = { 0.0f, 25.0f, 3.0f };
+	mRenderObject.transform.position = { 150.0f, 25.0f, 123.0f };
 
 	// Sphere 2
 	Mesh rock = MeshBuilder::CreateSphere(30, 30, 1.0f);
@@ -40,7 +40,7 @@ void GameState::Initialize()
 	TextureManager* tm2 = TextureManager::Get();
 	mRenderObject2.normalMapId = tm2->LoadTexture(L"rock/rock_normal.jpg");
 	mRenderObject2.diffuseMapId = tm2->LoadTexture(L"rock/rock_diffuse.jpg");
-	mRenderObject2.transform.position = { -2.0f, 25.0f, 0.0f };
+	mRenderObject2.transform.position = { 148.0f, 25.0f, 120.0f };
 
 	// Sphere 3
 	Mesh ground = MeshBuilder::CreateSphere(30, 30, 0.5f);
@@ -48,7 +48,7 @@ void GameState::Initialize()
 	TextureManager* tm3 = TextureManager::Get();
 	mRenderObject3.normalMapId = tm3->LoadTexture(L"ground/ground_normal.jpg");
 	mRenderObject3.diffuseMapId = tm3->LoadTexture(L"ground/ground_diffuse.jpg");
-	mRenderObject3.transform.position = { 2.0f, 25.0f, 0.0f };
+	mRenderObject3.transform.position = { 152.0f, 25.0f, 120.0f };
 
 	mTerrain.Initialize(L"../../Assets/Textures/terrain/heightmap_512x512.raw", 20.0f);
 	mGround.meshBuffer.Initialize(mTerrain.mesh);
@@ -193,7 +193,7 @@ void GameState::DebugUI()
 void GameState::UpdateCamera(float deltaTime)
 {
 	Input::InputSystem* input = Input::InputSystem::Get();
-	const float moveSpeed = input->IsKeyDown(Input::KeyCode::LSHIFT) ? 10.0f : 1.0f;
+	const float moveSpeed = input->IsKeyDown(Input::KeyCode::LSHIFT) ? 30.0f : 1.0f;
 	const float turnSpeed = 1.0f;
 
 	if (input->IsKeyDown(Input::KeyCode::W)) mCamera.Walk(moveSpeed * deltaTime);
