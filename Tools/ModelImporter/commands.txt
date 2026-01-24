@@ -1,3 +1,4 @@
 -scale 0.01 ../../Assets/Models/Character01/Character01.fbx ../../Assets/Models/Character01/Character01.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/HipHopDancing.fbx ../../Assets/Models/Character01/Animations/HipHopDancing.model
 -scale 0.01 ../../Assets/Models/Character01/Character01.fbx ../../Assets/Models/Character02/Character02.model
 -scale 0.01 ../../Assets/Models/Character01/Character01.fbx ../../Assets/Models/Character03/Character03.model

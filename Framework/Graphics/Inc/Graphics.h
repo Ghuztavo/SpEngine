@@ -39,3 +39,5 @@
 #include "Bone.h"
 #include "Skeleton.h"
 #include "AnimationUtil.h"
+#include "AnimationClip.h"
+#include "Animator.h"
