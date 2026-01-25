@@ -19,6 +19,9 @@ void GameState::Initialize()
 	mCharacter.Initialize(L"Character01/Character01.model");
 	mCharacter.animator = &mAnimator;
 	mm->AddAnimation(mCharacter.modelId, L"../../Assets/Models/Character01/Animations/HipHopDancing.animset");
+	mm->AddAnimation(mCharacter.modelId, L"../../Assets/Models/Character01/Animations/Excited.animset");
+	mm->AddAnimation(mCharacter.modelId, L"../../Assets/Models/Character01/Animations/Capoeira.animset");
+	mm->AddAnimation(mCharacter.modelId, L"../../Assets/Models/Character01/Animations/Dancing.animset");
 
 	mAnimator.Initialize(mCharacter.modelId);
 

@@ -1,4 +1,7 @@
 -scale 0.01 ../../Assets/Models/Character01/Character01.fbx ../../Assets/Models/Character01/Character01.model
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/HipHopDancing.fbx ../../Assets/Models/Character01/Animations/HipHopDancing.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Excited.fbx ../../Assets/Models/Character01/Animations/Excited.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Capoeira.fbx ../../Assets/Models/Character01/Animations/Capoeira.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Dancing.fbx ../../Assets/Models/Character01/Animations/Dancing.model
 -scale 0.01 ../../Assets/Models/Character02/Character02.fbx ../../Assets/Models/Character02/Character02.model
 -scale 0.01 ../../Assets/Models/Character03/Character03.fbx ../../Assets/Models/Character03/Character03.model
