@@ -4,7 +4,6 @@ using namespace SpEngine;
 using namespace SpEngine::Graphics;
 using namespace SpEngine::Input;
 
-
 void GameState::Initialize() 
 {
 	mCamera.SetPosition({ 0.0f, 2.0f, -3.0f });
@@ -16,7 +15,12 @@ void GameState::Initialize()
 	mDirectionalLight.specular = { 0.9f, 0.9f, 0.9f, 1.0f };
 
 	mCharacter.Initialize(L"Character01/Character01.model");
+	mCharacter2.Initialize(L"Character02/Character02.model");
+	mCharacter2.transform.position = { -2.0f, 0.0f, 0.0f };
+	mCharacter3.Initialize(L"Character03/Character03.model");
+	mCharacter3.transform.position = { 2.0f, 0.0f, 0.0f };
 
+	mSkeletonRender = CharacterSkeleton::None;
 
 	std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
 	mStandardEffect.Initialize(shaderFile);
@@ -27,6 +31,8 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
 	mCharacter.Terminate();
+	mCharacter2.Terminate();
+	mCharacter3.Terminate();
 	mStandardEffect.Terminate();
 }
 
@@ -37,15 +43,30 @@ void GameState::Update(float deltaTime)
 
 void GameState::Render()
 {
-	
-	
 	if (mDrawSkeleton)
 	{
 		AnimationUtil::BoneTransforms boneTransforms;
-		AnimationUtil::ComputeBoneTransforms(mCharacter.modelId, boneTransforms);
-		AnimationUtil::DrawSkeleton(mCharacter.modelId, boneTransforms);
-		SimpleDraw::AddGroundPlane(20.0f, Colors::White);
-		SimpleDraw::Render(mCamera);
+		AnimationUtil::BoneTransforms boneTransforms2;
+		AnimationUtil::BoneTransforms boneTransforms3;
+		switch (mSkeletonRender)
+		{
+		case CharacterSkeleton::Character01:
+			AnimationUtil::ComputeBoneTransforms(mCharacter.modelId, boneTransforms);
+			AnimationUtil::DrawSkeleton(mCharacter.modelId, boneTransforms);
+			break;
+		case CharacterSkeleton::Character02:
+			AnimationUtil::ComputeBoneTransforms(mCharacter2.modelId, boneTransforms2);
+			AnimationUtil::DrawSkeleton(mCharacter2.modelId, boneTransforms2);
+			break;
+		case CharacterSkeleton::Character03:
+			AnimationUtil::ComputeBoneTransforms(mCharacter3.modelId, boneTransforms3);
+			AnimationUtil::DrawSkeleton(mCharacter3.modelId, boneTransforms3);
+			break;
+		case CharacterSkeleton::None:
+			break;
+		}
+			SimpleDraw::AddGroundPlane(20.0f, Colors::White);
+			SimpleDraw::Render(mCamera);
 	}
 	else
 	{
@@ -54,6 +75,8 @@ void GameState::Render()
 
 		mStandardEffect.Begin();
 		mStandardEffect.Render(mCharacter);
+		mStandardEffect.Render(mCharacter2);
+		mStandardEffect.Render(mCharacter3);
 		mStandardEffect.End();
 	}
 }
@@ -94,6 +117,12 @@ void GameState::DebugUI()
 	}
 
 	ImGui::Checkbox("DrawSkeleton", &mDrawSkeleton);
+
+	ImGui::Text("Select Character Skeleton to Render:");
+	ImGui::RadioButton("Scifi character", (int*)&mSkeletonRender, (int)CharacterSkeleton::Character01);
+	ImGui::RadioButton("Knight character", (int*)&mSkeletonRender, (int)CharacterSkeleton::Character02);
+	ImGui::RadioButton("Monster character", (int*)&mSkeletonRender, (int)CharacterSkeleton::Character03);
+	ImGui::RadioButton("None", (int*)&mSkeletonRender, (int)CharacterSkeleton::None);
 
 	
 	mStandardEffect.DebugUI();

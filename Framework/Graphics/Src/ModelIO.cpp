@@ -40,14 +40,14 @@ void AnimationIO::Read(FILE* file, Animation& animation)
 		fscanf_s(file, "%f %f %f %f\n", &time, &pos.x, &pos.y, &pos.z);
 		builder.AddPositionKey(pos, time);
 	}
-	fscanf_s(file, "RotationKeys: %d\n", &keyCount);
+	fscanf_s(file, "RotationKeyCount: %d\n", &keyCount);
 	for (uint32_t k = 0; k < keyCount; ++k)
 	{
 		Math::Quaternion rot;
 		fscanf_s(file, "%f %f %f %f %f\n", &time, &rot.x, &rot.y, &rot.z, &rot.w);
 		builder.AddRotationKey(rot, time);
 	}
-	fscanf_s(file, "ScaleKey: %d\n", &keyCount);
+	fscanf_s(file, "ScaleKeyCount: %d\n", &keyCount);
 	for (uint32_t k = 0; k < keyCount; ++k)
 	{
 		Math::Vector3 scale;

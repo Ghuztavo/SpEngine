@@ -19,6 +19,18 @@ private:
 	SpEngine::Graphics::DirectionalLight mDirectionalLight;
 
 	SpEngine::Graphics::RenderGroup mCharacter;
+	SpEngine::Graphics::RenderGroup mCharacter2;
+	SpEngine::Graphics::RenderGroup mCharacter3;
+
+	enum class CharacterSkeleton
+	{
+		Character01,
+		Character02,
+		Character03,
+		None,
+	};
+
+	CharacterSkeleton mSkeletonRender = CharacterSkeleton::Character01;
 
 	SpEngine::Graphics::StandardEffect mStandardEffect;
 
