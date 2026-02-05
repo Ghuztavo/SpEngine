@@ -6,6 +6,7 @@ using namespace SpEngine;
 using namespace SpEngine::Core;
 using namespace SpEngine::Graphics;
 using namespace SpEngine::Input;
+using namespace SpEngine::Physics;
 
 void App::Run(const AppConfig& config)
 {
@@ -26,6 +27,9 @@ void App::Run(const AppConfig& config)
 	SimpleDraw::StaticInitialize(config.maxVertexCount);
 	TextureManager::StaticInitialize(L"../../Assets/Textures");
 	ModelManager::StaticInitialize(L"../../Assets/Models");
+
+	PhysicsWorld::Settings settings;
+	PhysicsWorld::StaticInitialize(settings);
 
 	//last step before running
 	ASSERT(mCurrentState != nullptr, "App: need an app state to run");
@@ -59,6 +63,7 @@ void App::Run(const AppConfig& config)
 #endif
 		{
 			mCurrentState->Update(deltaTime);
+			PhysicsWorld::Get()->Update(deltaTime);
 		}
 
 		GraphicsSystem* gs = GraphicsSystem::Get();
@@ -74,6 +79,7 @@ void App::Run(const AppConfig& config)
 	LOG("App Quit");
 	mCurrentState->Terminate();
 
+	PhysicsWorld::StaticTerminate();
 	ModelManager::StaticTerminate();
 	TextureManager::StaticTerminate();
 	SimpleDraw::StaticTerminate();
