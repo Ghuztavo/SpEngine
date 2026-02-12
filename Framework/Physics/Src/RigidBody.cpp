@@ -16,8 +16,11 @@ void RigidBody::Initialize(Graphics::Transform& graphicsTransform, const Collisi
 	mGraphicsTransform = &graphicsTransform;
 	mMass = mass;
 
+	// NOTE: may need to set to 0 if using a player and not wanting it to tip over 
+	btVector3 localInertia = btVector3();
+	shape.mCollisionShape->calculateLocalInertia(mass, localInertia);
 	mMotionState = new btDefaultMotionState(ConvertTobtTransform(graphicsTransform));
-	mRigidBody = new btRigidBody(mMass, mMotionState, shape.mCollisionShape);
+	mRigidBody = new btRigidBody(mMass, mMotionState, shape.mCollisionShape, localInertia);
 	PhysicsWorld::Get()->Register(this);
 }
 

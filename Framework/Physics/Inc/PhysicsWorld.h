@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PhysicsDebugDraw.h"
+
 namespace SpEngine::Physics
 {
 	class PhysicsObject;
@@ -43,9 +45,19 @@ namespace SpEngine::Physics
 		btDefaultCollisionConfiguration* mCollisionConfiguration = nullptr;
 		btSequentialImpulseConstraintSolver* mSolver = nullptr;
 		// this is the physics world that runs the simulations
+#ifdef USE_SOFT_BODY
+		friend class SoftBody;
+		btSoftRigidDynamicsWorld* mDynamicsWorld = nullptr;
+		btSoftRigidDynamicsWorld* GetSoftBodyWorld() { return mDynamicsWorld; }
+#else
 		btDiscreteDynamicsWorld* mDynamicsWorld = nullptr;
+		btSoftRigidDynamicsWorld* GetSoftBodyWorld() { return nullptr; }
+#endif
 
 		using PhysicsObjects = std::vector<PhysicsObject*>;
 		PhysicsObjects mPhysicsObjects;
+
+		PhysicsDebugDraw mPhysicsDebugDraw;
+		bool mDebugDraw = false;
 	};
 }
