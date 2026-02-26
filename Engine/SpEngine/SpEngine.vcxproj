@@ -33,6 +33,9 @@
     <ClCompile Include="Src\SpEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Audio\Audio.vcxproj">
+      <Project>{fd2ff6ea-0545-434b-b4b1-a6868524ec04}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Framework\Core\Core.vcxproj">
       <Project>{3515a3c2-ca57-4ae7-8cda-4fbf3ac39e75}</Project>
     </ProjectReference>

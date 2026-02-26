@@ -7,6 +7,7 @@ using namespace SpEngine::Core;
 using namespace SpEngine::Graphics;
 using namespace SpEngine::Input;
 using namespace SpEngine::Physics;
+using namespace SpEngine::Audio;
 
 void App::Run(const AppConfig& config)
 {
@@ -30,6 +31,10 @@ void App::Run(const AppConfig& config)
 
 	PhysicsWorld::Settings settings;
 	PhysicsWorld::StaticInitialize(settings);
+	EventManager::StaticInitialize();
+	AudioSystem::StaticInitialize();
+	SoundEffectManager::StaticInitialize(L"../../Assets/Audio");
+
 
 	//last step before running
 	ASSERT(mCurrentState != nullptr, "App: need an app state to run");
@@ -56,6 +61,8 @@ void App::Run(const AppConfig& config)
 			mCurrentState = std::exchange(mNextState, nullptr);
 			mCurrentState->Initialize();
 		}
+		
+		AudioSystem::Get()->Update();
 
 		float deltaTime = TimeUtil::GetDeltaTime();
 #if defined(_DEBUG)
@@ -79,6 +86,9 @@ void App::Run(const AppConfig& config)
 	LOG("App Quit");
 	mCurrentState->Terminate();
 
+	SoundEffectManager::StaticTerminate();
+	AudioSystem::StaticTerminate();
+	EventManager::StaticTerminate();
 	PhysicsWorld::StaticTerminate();
 	ModelManager::StaticTerminate();
 	TextureManager::StaticTerminate();
