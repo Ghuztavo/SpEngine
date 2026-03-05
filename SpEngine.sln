@@ -99,6 +99,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTKAudio_Desktop_2022
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Framework\Audio\Audio.vcxproj", "{FD2FF6EA-0545-434B-B4B1-A6868524EC04}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21_HelloProceduralAnimation", "VGP334\21_HelloProceduralAnimation\21_HelloProceduralAnimation.vcxproj", "{49A70AAF-983D-4FDD-84E3-E09598BD4686}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -371,6 +373,14 @@ Global
 		{FD2FF6EA-0545-434B-B4B1-A6868524EC04}.Release|x64.Build.0 = Release|x64
 		{FD2FF6EA-0545-434B-B4B1-A6868524EC04}.Release|x86.ActiveCfg = Release|Win32
 		{FD2FF6EA-0545-434B-B4B1-A6868524EC04}.Release|x86.Build.0 = Release|Win32
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Debug|x64.ActiveCfg = Debug|x64
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Debug|x64.Build.0 = Debug|x64
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Debug|x86.ActiveCfg = Debug|Win32
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Debug|x86.Build.0 = Debug|Win32
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x64.ActiveCfg = Release|x64
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x64.Build.0 = Release|x64
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x86.ActiveCfg = Release|Win32
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -410,6 +420,7 @@ Global
 		{D49C8227-CEEE-47BA-B365-600AEF453421} = {3A748AC6-4C36-43C8-B465-C55D7A4C2304}
 		{4F150A30-CECB-49D1-8283-6A3F57438CF5} = {167DFF98-914B-4FC7-A57A-04AD35697E18}
 		{FD2FF6EA-0545-434B-B4B1-A6868524EC04} = {0422E690-7650-46A9-A861-C1C6AF5779AF}
+		{49A70AAF-983D-4FDD-84E3-E09598BD4686} = {3A748AC6-4C36-43C8-B465-C55D7A4C2304}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87150F32-FC9B-48A9-A17A-901EC686C93E}
