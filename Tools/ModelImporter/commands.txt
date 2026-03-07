@@ -3,5 +3,13 @@
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Excited.fbx ../../Assets/Models/Character01/Animations/Excited.model
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Capoeira.fbx ../../Assets/Models/Character01/Animations/Capoeira.model
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Dancing.fbx ../../Assets/Models/Character01/Animations/Dancing.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Bored.fbx ../../Assets/Models/Character01/Animations/Bored.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Walking.fbx ../../Assets/Models/Character01/Animations/Walking.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Surprised.fbx ../../Assets/Models/Character01/Animations/Surprised.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/ButtonPushing.fbx ../../Assets/Models/Character01/Animations/ButtonPushing.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/GangnamStyle.fbx ../../Assets/Models/Character01/Animations/GangnamStyle.model
+
 -scale 0.01 ../../Assets/Models/Character02/Character02.fbx ../../Assets/Models/Character02/Character02.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character02/GangnamStyle2.fbx ../../Assets/Models/Character02/Animations/GangnamStyle2.model
+
 -scale 0.01 ../../Assets/Models/Character03/Character03.fbx ../../Assets/Models/Character03/Character03.model
