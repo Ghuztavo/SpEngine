@@ -8,6 +8,9 @@
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Surprised.fbx ../../Assets/Models/Character01/Animations/Surprised.model
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/ButtonPushing.fbx ../../Assets/Models/Character01/Animations/ButtonPushing.model
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character01/GangnamStyle.fbx ../../Assets/Models/Character01/Animations/GangnamStyle.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/Idle.fbx ../../Assets/Models/Character01/Animations/Idle.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/FallingDown.fbx ../../Assets/Models/Character01/Animations/FallingDown.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Character01/GettingUp.fbx ../../Assets/Models/Character01/Animations/GettingUp.model
 
 -scale 0.01 ../../Assets/Models/Character02/Character02.fbx ../../Assets/Models/Character02/Character02.model
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character02/GangnamStyle2.fbx ../../Assets/Models/Character02/Animations/GangnamStyle2.model

@@ -101,6 +101,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Framework\Audio\Au
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21_HelloProceduralAnimation", "VGP334\21_HelloProceduralAnimation\21_HelloProceduralAnimation.vcxproj", "{49A70AAF-983D-4FDD-84E3-E09598BD4686}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "22_FinalAnimationProject", "VGP334\22_FinalAnimationProject\22_FinalAnimationProject.vcxproj", "{21A531DE-0C25-4440-8087-695ECA71253B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -381,6 +383,14 @@ Global
 		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x64.Build.0 = Release|x64
 		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x86.ActiveCfg = Release|Win32
 		{49A70AAF-983D-4FDD-84E3-E09598BD4686}.Release|x86.Build.0 = Release|Win32
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Debug|x64.ActiveCfg = Debug|x64
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Debug|x64.Build.0 = Debug|x64
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Debug|x86.ActiveCfg = Debug|Win32
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Debug|x86.Build.0 = Debug|Win32
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Release|x64.ActiveCfg = Release|x64
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Release|x64.Build.0 = Release|x64
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Release|x86.ActiveCfg = Release|Win32
+		{21A531DE-0C25-4440-8087-695ECA71253B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -421,6 +431,7 @@ Global
 		{4F150A30-CECB-49D1-8283-6A3F57438CF5} = {167DFF98-914B-4FC7-A57A-04AD35697E18}
 		{FD2FF6EA-0545-434B-B4B1-A6868524EC04} = {0422E690-7650-46A9-A861-C1C6AF5779AF}
 		{49A70AAF-983D-4FDD-84E3-E09598BD4686} = {3A748AC6-4C36-43C8-B465-C55D7A4C2304}
+		{21A531DE-0C25-4440-8087-695ECA71253B} = {3A748AC6-4C36-43C8-B465-C55D7A4C2304}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87150F32-FC9B-48A9-A17A-901EC686C93E}
