@@ -19,10 +19,15 @@ void GameState::Initialize()
 	mSimpleTextureEffect.Initialize();
 	mSimpleTextureEffect.SetCamera(mCamera);
 
-	MeshPX sky = MeshBuilder::CreateSkyBoxSpherePX(60, 60, 200.0f);
-	mSkySphere.mesh.Initialize(sky);
-	mSkySphere.textureId = TextureManager::Get()->LoadTexture(L"space.jpg");
+	mParticleSystemEffect.Initialize();
+	mParticleSystemEffect.SetCamera(mCamera);
 
+	// Create sky sphere
+	MeshPX sky = MeshBuilder::CreateSkyBoxSpherePX(60, 60, 100.0f);
+	mSkySphere.mesh.Initialize(sky);
+	mSkySphere.textureId = TextureManager::Get()->LoadTexture(L"skysphere/sky.jpg");
+
+	// Create ground plane
 	TextureManager* tm = TextureManager::Get();
 	Mesh plane = MeshBuilder::CreatePlane(100, 100, 1.0f, true);
 	mGroundObject.meshBuffer.Initialize(plane);
@@ -30,8 +35,8 @@ void GameState::Initialize()
 	mGroundShape.InitializeHull({ 100.0f, 0.5f, 100.0f }, { 0.0f, -0.5f, 0.0f });
 	mGroundRigidBody.Initialize(mGroundObject.transform, mGroundShape);
 
-	mParticleSystemEffect.Initialize();
-	mParticleSystemEffect.SetCamera(mCamera);
+	// Character 1 animation
+
 
 }
 
@@ -40,6 +45,7 @@ void GameState::Terminate()
 	mParticleSystemEffect.Terminate();
 	mStandardEffect.Terminate();
 	mSimpleTextureEffect.Terminate();
+	TextureManager::Get()->ReleaseTexture(mSkySphere.textureId);
 	mGroundRigidBody.Terminate();
 	mGroundShape.Terminate();
 	mGroundObject.meshBuffer.Terminate();

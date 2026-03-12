@@ -2,7 +2,7 @@
 
 #include <SpEngine/Inc/SpEngine.h>
 
-class GameState : public SpEngine::AppState 
+class GameState : public SpEngine::AppState
 {
 public:
 	void Initialize() override;
@@ -41,6 +41,7 @@ private:
 		SpEngine::Graphics::RenderObject mElevatorRightDoor;
 		SpEngine::Graphics::RenderObject mElevatorLeftDoor;
 	};
+	ElevatorComponents mElevator;
 	SpEngine::Graphics::RenderObject mElevatorButton;
 
 	SpEngine::Graphics::Animation mCharacter1Animation;
