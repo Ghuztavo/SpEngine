@@ -13,6 +13,7 @@ public:
 
 private:
 	void UpdateCamera(float deltaTime);
+	
 
 	SpEngine::Core::EventListenerId mSpacePressedListenerId = 0;
 	SpEngine::Core::EventListenerId mEnterPressedListenerId = 0;
@@ -43,14 +44,31 @@ private:
 	};
 	ElevatorComponents mElevator;
 	SpEngine::Graphics::RenderObject mElevatorButton;
+	SpEngine::Graphics::Animation mElevatorButtonAnimation;
+	float mElevatorButtonAnimationTime = 0.0f;
+	SpEngine::Graphics::RenderObject mElevatorButtonPanel;
+	
 
+	// Character 1
+	SpEngine::Graphics::RenderGroup mCharacter1;
 	SpEngine::Graphics::Animation mCharacter1Animation;
-	SpEngine::Graphics::Animation mCharacter2Animation;
-	SpEngine::Graphics::Animation mElevatorAnimation;
+	SpEngine::Graphics::Animator mCharacter1Animator;
+	int mCharacter1ClipIndex = -1;
 	float mCharacter1AnimationTime = 0.0f;
+	void UpdateCharacter1Animator(float animationTime);
+
+	// Character 2
+	SpEngine::Graphics::RenderGroup mCharacter2;
+	SpEngine::Graphics::Animation mCharacter2Animation;
+	SpEngine::Graphics::Animator mCharacter2Animator;
+	int mCharacter2ClipIndex = -1;
 	float mCharacter2AnimationTime = 0.0f;
+	void UpdateCharacter2Animator(float animationTime);
+
+	SpEngine::Graphics::Animation mElevatorAnimation;
 	float mElevatorAnimationTime = 0.0f;
 
+	SpEngine::Audio::SoundId mWalkingSound = 0;
 	SpEngine::Audio::SoundId mElevatorFallingSound = 0;
 	SpEngine::Audio::SoundId mElevatorCrashSound = 0;
 	SpEngine::Audio::SoundId mGangnamSound = 0;

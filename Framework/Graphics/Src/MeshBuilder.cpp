@@ -285,6 +285,34 @@ MeshPC MeshBuilder::CreateRectanglePC(float width, float height, float depth)
 	return mesh;
 }
 
+MeshPC SpEngine::Graphics::MeshBuilder::CreateRectanglePC(float width, float height, float depth, const Color& color)
+{
+	MeshPC mesh;
+
+	int index = rand() % 100;
+	const float hw = width * 0.5f;
+	const float hh = height * 0.5f;
+	const float hd = depth * 0.5f;
+
+	// add all the vertices for the rectangle
+	//front face
+	mesh.vertices.push_back({ { -hw, -hh, -hd }, color });
+	mesh.vertices.push_back({ { -hw,  hh, -hd }, color });
+	mesh.vertices.push_back({ {  hw,  hh, -hd }, color });
+	mesh.vertices.push_back({ {  hw, -hh, -hd }, color });
+
+	//back face
+	mesh.vertices.push_back({ { -hw, -hh,  hd }, color });
+	mesh.vertices.push_back({ { -hw,  hh,  hd }, color });
+	mesh.vertices.push_back({ {  hw,  hh,  hd }, color });
+	mesh.vertices.push_back({ {  hw, -hh,  hd }, color });
+
+	// add all the indices for the rectangle
+	CreateCubeIndices(mesh.indices);
+
+	return mesh;
+}
+
 MeshPC MeshBuilder::CreatePlanePC(int numRows, int numCols, float spacing, bool horizontal)
 {
 	MeshPC mesh;

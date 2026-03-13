@@ -19,6 +19,7 @@ namespace SpEngine::Graphics
 
 		//rectangle
 		static MeshPC CreateRectanglePC(float width, float height, float depth);
+		static MeshPC CreateRectanglePC(float width, float height, float depth, const Color& color);
 
 		//plane
 		static MeshPC CreatePlanePC(int numRows, int numCols, float spacing, bool horizontal = true);
