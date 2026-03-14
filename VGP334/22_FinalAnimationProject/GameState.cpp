@@ -12,6 +12,8 @@ void GameState::Initialize()
 	mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
+	mDirectionalLight.direction = Math::Normalize({ 0.444f, 0.206f, -0.872f });
+
 	std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
 	mStandardEffect.Initialize(shaderFile);
 	mStandardEffect.SetCamera(mCamera);
@@ -65,31 +67,33 @@ void GameState::Initialize()
 
 	// Character 2
 	// Character 2 model
-	ModelManager* mm2 = ModelManager::Get();
+	mm = ModelManager::Get();
 	mCharacter2.Initialize(L"Character02/Character02.model");
 	mCharacter2.transform.position = { 0.0f, -3.0f, -5.0f };
 	// Better to use Quaternion to apply yaw rotation (PI = 180 degrees mapping)
 	mCharacter2.transform.rotation = Math::Quaternion::CreateFromYawPitchRoll(Math::Constants::Pi, 0.0f, 0.0f);
 	// Character 2 animator
 	mCharacter2.animator = &mCharacter2Animator;
-	mm2->AddAnimation(mCharacter2.modelId, L"../../Assets/Models/Character02/Animations/GangnamStyle2.animset");
+	mm->AddAnimation(mCharacter2.modelId, L"../../Assets/Models/Character02/Animations/GangnamStyle2.animset");
 	mCharacter2Animator.Initialize(mCharacter2.modelId);
 	// Character 2 Animation
 	mCharacter2AnimationTime = 0.0f;
 	mCharacter2Animation = AnimationBuilder()
-		.AddPositionKey({ -2.0f, -3.0f, -5.0f }, 0.0f)
-		.AddPositionKey({ -2.0f, -3.0f, -5.0f }, 46.0f)
-		.AddPositionKey({ -2.0f,  0.0f, -5.0f }, 49.0f)
+		.AddPositionKey({ -2.0f, -3.0f, -8.0f }, 0.0f)
+		.AddPositionKey({ -2.0f, -3.0f, -8.0f }, 32.0f)
+		.AddPositionKey({ -2.0f,  0.0f, -8.0f }, 34.0f)// Character 2 get up
+		.AddPositionKey({ -2.0f,  0.0f, -6.0f }, 46.0f)// Character 2 walk forward
+		.AddPositionKey({ -2.0f,  0.0f, -4.0f }, 49.0f)// Character 2 start Gangnam Style dance
 		.AddRotationKey(Math::Quaternion::CreateFromYawPitchRoll(Math::Constants::Pi, 0.0f, 0.0f), 0.0f)
 		.Build();
 
 	// Elevator 
-	//Elevator button
+	// Elevator button panel
 	MeshPC buttonPanel = MeshBuilder::CreateRectanglePC(0.5f, 1.5f, 0.1f);
 	mElevatorButtonPanel.meshBuffer.Initialize(buttonPanel);
 	mElevatorButtonPanel.transform.position = { -0.1f, 0.8f, -0.5f };
 
-	//Button
+	// Elevator button
 	Mesh button = MeshBuilder::CreateSphere(20, 20, 0.1f);
 	mElevatorButton.meshBuffer.Initialize(button);
 	mElevatorButton.diffuseMapId = tm->LoadTexture(L"planets/venus.jpg");
@@ -101,7 +105,18 @@ void GameState::Initialize()
 		.AddPositionKey({ -0.02f, 1.2f, -0.5f }, 12.2f)
 		.Build();
 
-
+	// Elevator
+	mm = ModelManager::Get();
+	mElevator.Initialize(L"Container/Container.model");
+	mElevator.transform.position = { 0.0f, 0.0f, -5.0f };
+	mElevator.transform.scale = { 100.0f, 100.0f, 1.0f };
+	mElevatorAnimationTime = 0.0f;
+	mElevatorAnimation = AnimationBuilder()
+		.AddPositionKey({ -2.0f, 5.0f, -10.0f }, 0.0f)
+		.AddScaleKey({ 500.0f, 10.0f, 10.0f }, 0.0f)
+		.AddRotationKey(Math::Quaternion::CreateFromYawPitchRoll(Math::Constants::HalfPi, -Math::Constants::HalfPi,0.0f), 0.0f)
+		.AddPositionKey({ -2.0f, 5.0f, -10.0f }, 20.0f)
+		.Build();
 
 }
 
@@ -125,6 +140,7 @@ void GameState::Terminate()
 
 	mElevatorButtonPanel.Terminate();
 	mElevatorButton.Terminate();
+	mElevator.Terminate();
 	
 }
 
@@ -141,8 +157,9 @@ void GameState::Update(float deltaTime)
 	mCharacter2AnimationTime += deltaTime;
 	UpdateCharacter2Animator(mCharacter2AnimationTime);
 	
-	// Update elevator button animation
+	// Update elevator animation
 	mElevatorButtonAnimationTime += deltaTime;
+	mElevatorAnimationTime += deltaTime;
 }
 
 void GameState::Render()
@@ -156,6 +173,7 @@ void GameState::Render()
 	mCharacter2.transform = mCharacter2Animation.GetTransform(mCharacter2AnimationTime);
 
 	mElevatorButton.transform = mElevatorButtonAnimation.GetTransform(mElevatorButtonAnimationTime);
+	mElevator.transform = mElevatorAnimation.GetTransform(mElevatorAnimationTime);
 
 	mStandardEffect.Begin();
 		mStandardEffect.Render(mGroundObject);
@@ -163,13 +181,25 @@ void GameState::Render()
 		mStandardEffect.Render(mCharacter2);
 		mStandardEffect.Render(mElevatorButtonPanel);
 		mStandardEffect.Render(mElevatorButton);
+		mStandardEffect.Render(mElevator);
 	mStandardEffect.End();
 }
 
 void GameState::DebugUI()
 {
 	ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-	
+	if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::DragFloat3("Direction#Light", &mDirectionalLight.direction.x, 0.01f))
+		{
+			mDirectionalLight.direction = Math::Normalize(mDirectionalLight.direction);
+		}
+
+		ImGui::ColorEdit4("Ambient#Light", &mDirectionalLight.ambient.r);
+		ImGui::ColorEdit4("Diffuse#Light", &mDirectionalLight.diffuse.r);
+		ImGui::ColorEdit4("Specular#Light", &mDirectionalLight.specular.r);
+	}
+
 	ImGui::End();
 }
 

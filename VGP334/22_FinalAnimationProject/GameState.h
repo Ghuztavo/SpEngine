@@ -32,17 +32,10 @@ private:
 
 	SpEngine::Graphics::SimpleTextureEffect::RenderData mSkySphere;
 
-	struct ElevatorComponents
-	{
-		SpEngine::Graphics::RenderObject mElevatorFloor;
-		SpEngine::Graphics::RenderObject mElevatorRightWall;
-		SpEngine::Graphics::RenderObject mElevatorLeftWall;
-		SpEngine::Graphics::RenderObject mElevatorCeiling;
-		SpEngine::Graphics::RenderObject mElevatorBackWall;
-		SpEngine::Graphics::RenderObject mElevatorRightDoor;
-		SpEngine::Graphics::RenderObject mElevatorLeftDoor;
-	};
-	ElevatorComponents mElevator;
+	SpEngine::Graphics::RenderGroup mElevator;
+	SpEngine::Graphics::Animation mElevatorAnimation;
+	float mElevatorAnimationTime = 0.0f;
+
 	SpEngine::Graphics::RenderObject mElevatorButton;
 	SpEngine::Graphics::Animation mElevatorButtonAnimation;
 	float mElevatorButtonAnimationTime = 0.0f;
@@ -64,9 +57,6 @@ private:
 	int mCharacter2ClipIndex = -1;
 	float mCharacter2AnimationTime = 0.0f;
 	void UpdateCharacter2Animator(float animationTime);
-
-	SpEngine::Graphics::Animation mElevatorAnimation;
-	float mElevatorAnimationTime = 0.0f;
 
 	SpEngine::Audio::SoundId mWalkingSound = 0;
 	SpEngine::Audio::SoundId mElevatorFallingSound = 0;

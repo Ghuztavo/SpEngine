@@ -16,3 +16,7 @@
 -animOnly 1 -scale 0.01 ../../Assets/Models/Character02/GangnamStyle2.fbx ../../Assets/Models/Character02/Animations/GangnamStyle2.model
 
 -scale 0.01 ../../Assets/Models/Character03/Character03.fbx ../../Assets/Models/Character03/Character03.model
+
+-scale 0.01 ../../Assets/Models/Elevator/Elevator.fbx ../../Assets/Models/Elevator/Elevator.model
+
+-scale 0.01 ../../Assets/Models/Container/Container.fbx ../../Assets/Models/Container/Container.model
