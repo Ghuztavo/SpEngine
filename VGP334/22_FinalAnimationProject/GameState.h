@@ -32,6 +32,7 @@ private:
 
 	SpEngine::Graphics::SimpleTextureEffect::RenderData mSkySphere;
 
+	// Container
 	SpEngine::Graphics::RenderGroup mElevator;
 	SpEngine::Graphics::Animation mElevatorAnimation;
 	float mElevatorAnimationTime = 0.0f;
@@ -40,7 +41,6 @@ private:
 	SpEngine::Graphics::Animation mElevatorButtonAnimation;
 	float mElevatorButtonAnimationTime = 0.0f;
 	SpEngine::Graphics::RenderObject mElevatorButtonPanel;
-	
 
 	// Character 1
 	SpEngine::Graphics::RenderGroup mCharacter1;
@@ -58,9 +58,15 @@ private:
 	float mCharacter2AnimationTime = 0.0f;
 	void UpdateCharacter2Animator(float animationTime);
 
+	SpEngine::Physics::ParticleSystem mCrashingParticles;
+	SpEngine::Graphics::Animation mCrashingAnimation;
+	float mCrashingAnimationTime = 0.0f;
+
+
 	SpEngine::Audio::SoundId mWalkingSound = 0;
 	SpEngine::Audio::SoundId mElevatorFallingSound = 0;
 	SpEngine::Audio::SoundId mElevatorCrashSound = 0;
+	SpEngine::Audio::SoundId mBrickSound = 0;
 	SpEngine::Audio::SoundId mGangnamSound = 0;
 
 };
