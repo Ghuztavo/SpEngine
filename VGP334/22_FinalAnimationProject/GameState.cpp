@@ -301,6 +301,11 @@ void GameState::Render()
 void GameState::DebugUI()
 {
 	ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::Text("Animation Time: %.2f", mCharacter1AnimationTime);
+
+	ImGui::Separator();
+
 	if (ImGui::Button("Reset Animation"))
 	{
 		// Reset animation timelines
@@ -322,7 +327,6 @@ void GameState::DebugUI()
 		sm->Stop(mElevatorCrashSound);
 		sm->Stop(mBrickSound);
 	}
-
 	ImGui::End();
 }
 
