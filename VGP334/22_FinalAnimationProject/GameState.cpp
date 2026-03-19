@@ -72,8 +72,6 @@ void GameState::Initialize()
 		{
 			SoundEffectManager::Get()->Stop(mWalkingSound);
 		};
-
-
 	// Character 1 Animation
 	mCharacter1Animation = AnimationBuilder()
 		.AddPositionKey({ 0.0f, 0.0f, 30.0f }, 0.0f)
@@ -92,7 +90,6 @@ void GameState::Initialize()
 	mm = ModelManager::Get();
 	mCharacter2.Initialize(L"Character02/Character02.model");
 	mCharacter2.transform.position = { 0.0f, -3.0f, -5.0f };
-	// Better to use Quaternion to apply yaw rotation (PI = 180 degrees mapping)
 	mCharacter2.transform.rotation = Math::Quaternion::CreateFromYawPitchRoll(Math::Constants::Pi, 0.0f, 0.0f);
 	// Character 2 animator
 	mCharacter2.animator = &mCharacter2Animator;
