@@ -75,7 +75,7 @@ void ShadowEffect::Render(const RenderGroup& renderGroup)
 
 }
 
-void ShadowEffect::DegubUI()
+void ShadowEffect::DebugUI()
 {
 	if (ImGui::CollapsingHeader("Shadow Effect", ImGuiTreeNodeFlags_DefaultOpen))
 	{

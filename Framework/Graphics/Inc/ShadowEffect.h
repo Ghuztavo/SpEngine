@@ -24,7 +24,7 @@ namespace SpEngine::Graphics
 		void Render(const RenderObject& renderObject);
 		void Render(const RenderGroup& renderGroup);
 
-		void DegubUI();
+		void DebugUI();
 
 		void SetDirectionalLight(const DirectionalLight& directionalLight);
 		void SetFocus(const Math::Vector3& focusPoint);
