@@ -6,6 +6,7 @@
 #include "TransformComponent.h"
 #include "AnimatorComponent.h"
 #include "GameWorld.h"
+#include "SaveUtil.h"
 
 using namespace SpEngine;
 
@@ -15,7 +16,6 @@ void RenderService::Initialize()
 
 	std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
 	mStandardEffect.Initialize(shaderFile);
-	mStandardEffect.SetDirectionalLight(mDirectionalLight);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
 	mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
 	mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
@@ -79,6 +79,20 @@ void RenderService::DebugUI()
 		}
 		mStandardEffect.DebugUI();
 		mShadowEffect.DebugUI();
+	}
+}
+
+void RenderService::Deserialize(const rapidjson::Value& value)
+{
+	SaveUtil::ReadVector3("Direction", mDirectionalLight.direction, value);
+	mDirectionalLight.direction = Math::Normalize(mDirectionalLight.direction);
+	SaveUtil::ReadColor("Ambient", mDirectionalLight.ambient, value);
+	SaveUtil::ReadColor("Diffuse", mDirectionalLight.diffuse, value);
+	SaveUtil::ReadColor("Specular", mDirectionalLight.specular, value);
+
+	if (value.HasMember("ShadowSize"))
+	{
+		mShadowEffect.SetSize(value["ShadowSize"].GetFloat());
 	}
 }
 

@@ -31,6 +31,7 @@ namespace SpEngine::Physics
 		void Update(float deltaTime);
 		void DebugUI();
 
+		void UpdateSettings(const Settings& settings);
 		void SetGravity(const Math::Vector3& gravity);
 
 		void Register(PhysicsObject* physicsObject);
