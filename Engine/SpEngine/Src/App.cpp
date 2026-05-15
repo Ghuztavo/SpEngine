@@ -34,6 +34,8 @@ void App::Run(const AppConfig& config)
 	EventManager::StaticInitialize();
 	AudioSystem::StaticInitialize();
 	SoundEffectManager::StaticInitialize(L"../../Assets/Audio");
+	UIFont::StaticInitialize(UIFont::FontType::Arial);
+	UISpriteRenderer::StaticInitialize();
 
 
 	//last step before running
@@ -88,6 +90,8 @@ void App::Run(const AppConfig& config)
 	LOG("App Quit");
 	mCurrentState->Terminate();
 
+	UISpriteRenderer::StaticTerminate();
+	UIFont::StaticTerminate();
 	SoundEffectManager::StaticTerminate();
 	AudioSystem::StaticTerminate();
 	EventManager::StaticTerminate();

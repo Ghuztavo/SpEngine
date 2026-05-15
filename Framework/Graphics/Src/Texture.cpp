@@ -41,6 +41,24 @@ void Texture::Initialize(const std::filesystem::path& fileName)
 		nullptr,
 		&mShaderResourceView);
 	ASSERT(SUCCEEDED(hr), "Texture: failed to load texture %s", fileName.c_str());
+
+	// to obtain width and height
+	// we need to get the resource info, convert to texture2D, then get texture description
+	
+	ID3D11Resource* resource = nullptr;
+	mShaderResourceView->GetResource(&resource);
+
+	ID3D11Texture2D* texture2D = nullptr;
+	hr = resource->QueryInterface(&texture2D);
+	ASSERT(SUCCEEDED(hr), "Texture: failed to find texture data");
+
+	D3D11_TEXTURE2D_DESC desc;
+	texture2D->GetDesc(&desc);
+	mWidth = static_cast<uint32_t>(desc.Width);
+	mHeight = static_cast<uint32_t>(desc.Height);
+
+	SafeRelease(texture2D);
+	SafeRelease(resource);
 }
 
 void Texture::Terminate()
@@ -64,4 +82,13 @@ void* Texture::GetRawData() const
 {
 	return mShaderResourceView;
 
+}
+
+uint32_t Texture::GetWidth() const
+{
+	return mWidth;
+}
+uint32_t Texture::GetHeight() const
+{
+	return mHeight;
 }
