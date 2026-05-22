@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -34,6 +34,7 @@
     <ClInclude Include="Inc\MeshComponent.h" />
     <ClInclude Include="Inc\ModelComponent.h" />
     <ClInclude Include="Inc\PhysicsService.h" />
+    <ClInclude Include="Inc\PlayerControllerComponent.h" />
     <ClInclude Include="Inc\RenderObjectComponent.h" />
     <ClInclude Include="Inc\RenderService.h" />
     <ClInclude Include="Inc\RigidBodyComponent.h" />
@@ -44,6 +45,7 @@
     <ClInclude Include="Inc\SpEngine.h" />
     <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeIds.h" />
+    <ClInclude Include="Inc\UIButtonComponent.h" />
     <ClInclude Include="Inc\UIComponent.h" />
     <ClInclude Include="Inc\UIRenderService.h" />
     <ClInclude Include="Inc\UISpriteComponent.h" />
@@ -62,6 +64,7 @@
     <ClCompile Include="Src\MeshComponent.cpp" />
     <ClCompile Include="Src\ModelComponent.cpp" />
     <ClCompile Include="Src\PhysicsService.cpp" />
+    <ClCompile Include="Src\PlayerControllerComponent.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -73,6 +76,7 @@
     <ClCompile Include="Src\SoundEventComponent.cpp" />
     <ClCompile Include="Src\SpEngine.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
+    <ClCompile Include="Src\UIButtonComponent.cpp" />
     <ClCompile Include="Src\UIRenderService.cpp" />
     <ClCompile Include="Src\UISpriteComponent.cpp" />
     <ClCompile Include="Src\UITextComponent.cpp" />

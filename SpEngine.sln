@@ -113,11 +113,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Objects", "Objects", "{E34232B9-2FE6-4A1D-BFE8-F84C12E2F573}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Objects\compound_mesh.json = Assets\Templates\Objects\compound_mesh.json
 		Assets\Templates\Objects\custom_obj.json = Assets\Templates\Objects\custom_obj.json
 		Assets\Templates\Objects\fps_camera_obj.json = Assets\Templates\Objects\fps_camera_obj.json
 		Assets\Templates\Objects\ground.json = Assets\Templates\Objects\ground.json
 		Assets\Templates\Objects\mesh_obj.json = Assets\Templates\Objects\mesh_obj.json
 		Assets\Templates\Objects\model_obj.json = Assets\Templates\Objects\model_obj.json
+		Assets\Templates\Objects\player_obj.json = Assets\Templates\Objects\player_obj.json
+		Assets\Templates\Objects\simple_mesh.json = Assets\Templates\Objects\simple_mesh.json
 		Assets\Templates\Objects\transform_obj.json = Assets\Templates\Objects\transform_obj.json
 	EndProjectSection
 EndProject
@@ -131,6 +134,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{A1FCAC
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FW1FontWrapper", "External\FW1FontWrapper\FW1FontWrapper.vcxproj", "{0D034612-14E2-44E7-993A-72344A2CA7BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C2B21A36-FC94-4D39-AB7D-6B09F186CF9F}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\UI\hud_screen.json = Assets\Templates\UI\hud_screen.json
+		Assets\Templates\UI\ui_button.json = Assets\Templates\UI\ui_button.json
+		Assets\Templates\UI\ui_sprite.json = Assets\Templates\UI\ui_sprite.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -509,6 +519,7 @@ Global
 		{5302B87F-83F8-448B-8A47-5C3F398C5416} = {04C7BEF0-8AFE-46CB-A9A7-46417A0B22AE}
 		{A1FCACBF-1954-440B-AE4C-1CBC6257CE79} = {8FD5C455-896B-4E09-BF46-73F386BCF170}
 		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {167DFF98-914B-4FC7-A57A-04AD35697E18}
+		{C2B21A36-FC94-4D39-AB7D-6B09F186CF9F} = {8FD5C455-896B-4E09-BF46-73F386BCF170}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87150F32-FC9B-48A9-A17A-901EC686C93E}

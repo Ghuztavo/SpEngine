@@ -27,6 +27,8 @@
 #include "SoundBankComponent.h"
 #include "UIComponent.h"
 #include "UITextComponent.h"
+#include "UIButtonComponent.h"
+#include "PlayerControllerComponent.h"
 
 // services
 #include "Service.h"
