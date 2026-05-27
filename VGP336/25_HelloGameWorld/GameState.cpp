@@ -59,6 +59,9 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
 	mGameWorld.Update(deltaTime);
+
+	// if I press ctrl the camera moves, right now the speed of the camera is 0
+	
 }
 
 void GameState::Render()
