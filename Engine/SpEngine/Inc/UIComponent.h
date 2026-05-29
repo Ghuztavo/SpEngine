@@ -9,5 +9,6 @@ namespace SpEngine
 	{
 	public:
 		virtual void Render() = 0;
+		void Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue) override;
 	};
 }

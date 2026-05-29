@@ -32,6 +32,19 @@ void PhysicsService::Deserialize(const rapidjson::Value& value)
 	Physics::PhysicsWorld::Get()->UpdateSettings(settings);
 }
 
+void PhysicsService::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
+{
+	rapidjson::Value serviceValue(rapidjson::kObjectType);
+
+	Physics::PhysicsWorld::Settings& settings = Physics::PhysicsWorld::Get()->GetSettings();
+	int simSteps = settings.simulationSteps;
+	SaveUtil::ReadVector3("Gravity", settings.gravity, serviceValue);
+	SaveUtil::ReadInt("SimSteps", simSteps, serviceValue);
+	SaveUtil::ReadFloat("FixedTimeStep", settings.fixedTimeStep, serviceValue);
+	value.AddMember("PhysicsService", serviceValue, doc.GetAllocator());
+
+}
+
 void PhysicsService::Register(RigidBodyComponent* rigidBodyComponent)
 {
 	Physics::PhysicsWorld::Get()->Register(&rigidBodyComponent->mRigidBody);

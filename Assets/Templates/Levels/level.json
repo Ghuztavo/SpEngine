@@ -24,15 +24,6 @@
 		"Transform": {
 			"Template": "../../Assets/Templates/Objects/transform_obj.json"
 		},
-		"Camera": {
-			"Template": "../../Assets/Templates/Objects/fps_camera_obj.json",
-			"Components": {
-				"CameraComponent": {
-					"Position": [ 0.0, 5.0, -10.0 ],
-					"LookAt": [ 0.0, 0.0, 0.0 ]
-				}
-			}
-		},
 		"SphereObj": {
 			"Template": "../../Assets/Templates/Objects/mesh_obj.json",
 			"Components": {
