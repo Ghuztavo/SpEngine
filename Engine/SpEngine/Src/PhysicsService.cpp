@@ -36,11 +36,11 @@ void PhysicsService::Serialize(rapidjson::Document& doc, rapidjson::Value& value
 {
 	rapidjson::Value serviceValue(rapidjson::kObjectType);
 
-	Physics::PhysicsWorld::Settings& settings = Physics::PhysicsWorld::Get()->GetSettings();
+	const Physics::PhysicsWorld::Settings& settings = Physics::PhysicsWorld::Get()->GetSettings();
 	int simSteps = settings.simulationSteps;
-	SaveUtil::ReadVector3("Gravity", settings.gravity, serviceValue);
-	SaveUtil::ReadInt("SimSteps", simSteps, serviceValue);
-	SaveUtil::ReadFloat("FixedTimeStep", settings.fixedTimeStep, serviceValue);
+	SaveUtil::WriteVector3("Gravity", settings.gravity, doc, serviceValue);
+	SaveUtil::WriteInt("SimSteps", simSteps, doc, serviceValue);
+	SaveUtil::WriteFloat("FixedTimeStep", settings.fixedTimeStep, doc, serviceValue);
 	value.AddMember("PhysicsService", serviceValue, doc.GetAllocator());
 
 }

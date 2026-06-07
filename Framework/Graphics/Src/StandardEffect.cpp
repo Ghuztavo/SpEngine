@@ -41,8 +41,8 @@ void StandardEffect::Begin()
 {
 	mVertexShader.Bind();
 	mPixelShader.Bind();
-	mSampler.BindVS(0);
 	mSampler.BindPS(0);
+	mSampler.BindVS(0);
 
 	mTransformBuffer.BindVs(0);
 	mLightBuffer.BindVs(1);
