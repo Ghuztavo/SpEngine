@@ -8,8 +8,10 @@
     "MeshComponent": {
       "CastShadow": false,
       "Shape": {
-        "Type": "Cube",
-        "Size": 1.0
+        "Type": "Sphere",
+        "Slices": 60,
+        "Rings": 60,
+        "Radius": 0.5
       },
       "Material": {
         "Emissive": [ 0.0, 0.0, 0.0, 1.0 ],
@@ -19,7 +21,14 @@
         "Shininess": 10.0
       },
       "Textures": {
-        "DiffuseMap": "../../Assets/Textures/Images/red.jpg"
+        "DiffuseMap": "../../Assets/Textures/Images/green.jpg"
+      }
+    },
+    "RigidBodyComponent": {
+      "Mass": 1.0,
+      "ColliderData": {
+        "Shape": "Sphere",
+        "Radius": 0.5
       }
     }
   }
