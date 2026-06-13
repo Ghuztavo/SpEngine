@@ -2,9 +2,9 @@
 #include <queue>
 #include <future>
 #include <chrono>
+#include <atomic>
 
-// Convert a node's grid position to a centered world-space XZ coordinate
-// The grid is centered at the world origin the same way DrawGrid() draws it
+// Convert a node's grid position to a centered world space position on x z
 SpEngine::Math::Vector3 Ai::NodeToWorld(const Node* node) const
 {
 	const float halfW = (COL_COUNT * NODE_SIZE) * 0.5f;
@@ -15,8 +15,6 @@ SpEngine::Math::Vector3 Ai::NodeToWorld(const Node* node) const
 	const float z = (node->row + 0.5f) * NODE_SIZE - halfH;
 	return { x, 0.5f, z };
 }
-
-//  Grid initialisation
 
 void Ai::Start(SpEngine::GameWorld& world)
 {
@@ -32,25 +30,18 @@ void Ai::Start(SpEngine::GameWorld& world)
 		}
 	}
 
-	// Block nodes and place obstacle cubes first
 	SpawnObstacles(world);
 
-	// single threaded and multi-threaded versions
-	
-	auto startTime = std::chrono::high_resolution_clock::now();
+	// Single threaded and multi-threaded versions
 	
 	// Single-threaded version
-	//SpawnAgentsSingleThreaded(world);
+	//SpawnAgentsSingleThreaded(world); // <------------------------------------------------------------------------- single-threaded version, the debug log shows the time
 
 	// Multi-threaded version
-	SpawnAgentsMultiThreaded(world);
+	SpawnAgentsMultiThreaded(world); // <---------------------------------------------------------------------------- multi-threaded version, the debug log shows the time
 
-	auto endTime = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double, std::milli> elapsed = endTime - startTime;
-	LOG("Agent spawning and A* pathfinding took: %.3f ms", elapsed.count());
+	// note: the path finding is faster with multi-threading but the overall time is a bit faster with the single-threaded version because of all the allocations of the agent tasks, maybe
 }
-
-//  Draw grid
 
 void Ai::DrawGrid()
 {
@@ -84,16 +75,12 @@ void Ai::DrawGrid()
 	}
 }
 
-//  A* random node helper
-
 Node* Ai::GetRandomNode()
 {
 	int randRow = rand() % ROW_COUNT;
 	int randCol = rand() % COL_COUNT;
 	return &grid[randRow][randCol];
 }
-
-//  Spawn obstacle cubes at randomly blocked nodes
 
 void Ai::SpawnObstacles(SpEngine::GameWorld& world)
 {
@@ -138,15 +125,15 @@ void Ai::SpawnObstacles(SpEngine::GameWorld& world)
 //  Spawn agents Single-threaded version
 void Ai::SpawnAgentsSingleThreaded(SpEngine::GameWorld& world)
 {
-	// Clean up any leftover entries from a previous run
 	mAgents.clear();
 
 	const std::filesystem::path agentTemplate =
 		L"../../Assets/Templates/Objects/AiAgent_obj.json";
 
+	double totalSearchTimeMs = 0.0;
+
 	for (int i = 0; i < AGENT_COUNT; ++i)
 	{
-		// pick two unblocked random nodes for start and goal
 		Node* startNode = GetRandomNode();
 		while (startNode->blocked)
 			startNode = GetRandomNode();
@@ -155,10 +142,11 @@ void Ai::SpawnAgentsSingleThreaded(SpEngine::GameWorld& world)
 		while (goalNode == startNode || goalNode->blocked)
 			goalNode = GetRandomNode();
 
-		// Run A* to build the path
+		auto t0 = std::chrono::high_resolution_clock::now();
 		AStarSearch(startNode, goalNode);
+		auto t1 = std::chrono::high_resolution_clock::now();
+		totalSearchTimeMs += std::chrono::duration<double, std::milli>(t1 - t0).count();
 
-		// Only spawn if a path was actually found
 		if (aStarPath.empty())
 		{
 			--i;   // retry this agent slot
@@ -180,7 +168,6 @@ void Ai::SpawnAgentsSingleThreaded(SpEngine::GameWorld& world)
 			transform->position = NodeToWorld(startNode);
 		}
 
-		// sync the rigid body
 		auto* rb = go->GetComponent<SpEngine::RigidBodyComponent>();
 		if (rb != nullptr)
 		{
@@ -200,26 +187,26 @@ void Ai::SpawnAgentsSingleThreaded(SpEngine::GameWorld& world)
 
 		mAgents.push_back(std::move(entry));
 	}
+	
+	LOG("Single-Threaded Pathfinding calculation took: %.3f ms", totalSearchTimeMs);
 }
 
 //  Spawn agents Multi-threaded version
-
 void Ai::SpawnAgentsMultiThreaded(SpEngine::GameWorld& world)
 {
 	mAgents.clear();
 
 	const std::filesystem::path agentTemplate = L"../../Assets/Templates/Objects/AiAgent_obj.json";
 
-	// Data needed for each agent's async task
+	// Data for async tasks
 	struct AgentTask
 	{
 		Node* startNode = nullptr;
 		Node* goalNode = nullptr;
-		std::future<std::vector<Node*>> pathFuture;
+		std::vector<Node*> path;
 	};
 
-	std::vector<AgentTask> tasks;
-	tasks.reserve(AGENT_COUNT);
+	std::vector<AgentTask> tasks(AGENT_COUNT);
 
 	for (int i = 0; i < AGENT_COUNT; ++i)
 	{
@@ -231,20 +218,56 @@ void Ai::SpawnAgentsMultiThreaded(SpEngine::GameWorld& world)
 		while (goalNode == startNode || goalNode->blocked)
 			goalNode = GetRandomNode();
 
-		AgentTask task;
-		task.startNode = startNode;
-		task.goalNode = goalNode;
-		// Launch A* on a background thread
-		task.pathFuture = std::async(std::launch::async, &Ai::AStarSearchThreadSafe, this, startNode, goalNode);
-		
-		tasks.push_back(std::move(task));
+		tasks[i].startNode = startNode;
+		tasks[i].goalNode = goalNode;
 	}
 
-	// Wait for threads to finish and spawn GameObjects
+	// Determine optimal number of worker threads
+	int numThreads = std::thread::hardware_concurrency();
+	if (numThreads == 0) numThreads = 4;
+	numThreads = std::min(numThreads, (int)AGENT_COUNT);
+
+	int agentsPerThread = AGENT_COUNT / numThreads;
+	int extraAgents = AGENT_COUNT % numThreads;
+
+	std::vector<std::future<void>> futures;
+	futures.reserve(numThreads);
+
+	int currentIdx = 0;
+
+	// measure only the thread dispatch and pathfinding
+	auto searchStartTime = std::chrono::high_resolution_clock::now();
+
+	for (int t = 0; t < numThreads; ++t)
+	{
+		int count = agentsPerThread + (t < extraAgents ? 1 : 0);
+		int startIdx = currentIdx;
+		int endIdx = currentIdx + count;
+		currentIdx = endIdx;
+
+		futures.push_back(std::async(std::launch::async, [this, &tasks, startIdx, endIdx]() {
+			for (int i = startIdx; i < endIdx; ++i)
+			{
+				tasks[i].path = AStarSearchThreadSafe(tasks[i].startNode, tasks[i].goalNode);
+			}
+		}));
+	}
+
+	// Wait for all worker threads to finish
+	for (auto& f : futures)
+	{
+		f.get();
+	}
+
+	auto searchEndTime = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double, std::milli> searchElapsed = searchEndTime - searchStartTime;
+	LOG("Multi-Threaded Pathfinding calculation took: %.3f ms (Using %d threads)", searchElapsed.count(), numThreads);
+
+	// Spawn GameObjects 
 	for (int i = 0; i < (int)tasks.size(); ++i)
 	{
 		auto& task = tasks[i];
-		std::vector<Node*> path = task.pathFuture.get();
+		std::vector<Node*>& path = task.path;
 
 		if (path.empty())
 			continue;
@@ -273,105 +296,13 @@ void Ai::SpawnAgentsMultiThreaded(SpEngine::GameWorld& world)
 		entry.startNode = task.startNode;
 		entry.goalNode = task.goalNode;
 		
-		// Path returned by AStarSearchThreadSafe is already goal -> start reversed
+		// reverse the path because A* returns it from goal to start
 		entry.path.assign(path.rbegin(), path.rend());
 		entry.pathIndex = 0;
 		entry.moveTimer = 0.0f;
 
 		mAgents.push_back(std::move(entry));
 	}
-}
-
-//  copy oa the A* implementation from AStarSearch but with local state to be thread safe
-
-std::vector<Node*> Ai::AStarSearchThreadSafe(Node* start, Node* goal) const
-{
-	std::vector<Node*> path;
-	
-	// local state array instead of copying the grid
-	struct SearchState {
-		float gCost = FLT_MAX;
-		float hCost = FLT_MAX;
-		float fCost = FLT_MAX;
-		Node* parent = nullptr;
-		bool visited = false;
-	};
-
-	std::unique_ptr<SearchState[]> states = std::make_unique<SearchState[]>(ROW_COUNT * COL_COUNT);
-	
-	auto GetState = [&states](int r, int c) -> SearchState& {
-		return states[r * COL_COUNT + c];
-	};
-
-	auto Heuristic = [](Node* a, Node* b) {
-		return std::abs(a->row - b->row) + std::abs(a->col - b->col);
-	};
-
-	auto Compare = [&GetState](Node* a, Node* b) {
-		SearchState& stateA = GetState(a->row, a->col);
-		SearchState& stateB = GetState(b->row, b->col);
-		return stateA.fCost > stateB.fCost || (stateA.fCost == stateB.fCost && stateA.hCost > stateB.hCost); 
-	};
-
-	std::priority_queue<Node*, std::vector<Node*>, decltype(Compare)> openSet(Compare);
-
-	SearchState& startState = GetState(start->row, start->col);
-	startState.gCost = 0.0f;
-	startState.hCost = Heuristic(start, goal);
-	startState.fCost = startState.hCost;
-
-	openSet.push(start);
-
-	while (!openSet.empty())
-	{
-		Node* current = openSet.top();
-		openSet.pop();
-		
-		SearchState& currentState = GetState(current->row, current->col);
-		currentState.visited = true;
-
-		if (current == goal)
-		{
-			Node* curr = current;
-			while (curr != nullptr)
-			{
-				path.push_back(curr);
-				curr = GetState(curr->row, curr->col).parent;
-			}
-			return path;
-		}
-
-		Node* neighbors[4] = { nullptr, nullptr, nullptr, nullptr };
-		int ncount = 0;
-		int r = current->row;
-		int c = current->col;
-		
-		if (r - 1 >= 0) neighbors[ncount++] = const_cast<Node*>(&grid[r - 1][c]);
-		if (r + 1 < ROW_COUNT) neighbors[ncount++] = const_cast<Node*>(&grid[r + 1][c]);
-		if (c + 1 < COL_COUNT) neighbors[ncount++] = const_cast<Node*>(&grid[r][c + 1]);
-		if (c - 1 >= 0) neighbors[ncount++] = const_cast<Node*>(&grid[r][c - 1]);
-
-		for (int i = 0; i < ncount; ++i)
-		{
-			Node* neighbor = neighbors[i];
-			SearchState& neighborState = GetState(neighbor->row, neighbor->col);
-
-			if (neighbor->blocked || neighborState.visited)
-				continue;
-
-			float tentative_gScore = currentState.gCost + 1.0f;
-			if (tentative_gScore < neighborState.gCost)
-			{
-				neighborState.gCost = tentative_gScore;
-				neighborState.hCost = Heuristic(neighbor, goal);
-				neighborState.fCost = neighborState.gCost + neighborState.hCost;
-				neighborState.parent = current;
-				openSet.push(neighbor);
-			}
-		}
-	}
-	
-	return path;
 }
 
 
@@ -382,7 +313,6 @@ void Ai::UpdateAgents(float deltaTime)
 		if (agent.path.empty())
 			continue;
 
-		// Finished the whole path?
 		if (agent.pathIndex >= (int)agent.path.size())
 			continue;
 
@@ -403,7 +333,6 @@ void Ai::UpdateAgents(float deltaTime)
 
 		if (dist <= step)
 		{
-			// Snap to waypoint and advance
 			transform->position = target;
 			if (rb != nullptr) rb->SetPosition(target);
 			++agent.pathIndex;
@@ -419,17 +348,16 @@ void Ai::UpdateAgents(float deltaTime)
 	}
 }
 
-
 void Ai::DrawAgentPaths()
 {
-	// A small palette of colours so agents are distinguishable
+	// colors for the paths
 	static const SpEngine::Graphics::Color kPalette[] =
 	{
-		{ 0.2f, 0.8f, 1.0f, 1.0f },   // cyan
-		{ 1.0f, 0.5f, 0.0f, 1.0f },   // orange
-		{ 0.4f, 1.0f, 0.4f, 1.0f },   // green
-		{ 1.0f, 0.2f, 0.8f, 1.0f },   // magenta
-		{ 1.0f, 1.0f, 0.2f, 1.0f },   // yellow
+		{ 0.2f, 0.8f, 1.0f, 1.0f },   
+		{ 1.0f, 0.5f, 0.0f, 1.0f },   
+		{ 0.4f, 1.0f, 0.4f, 1.0f },   
+		{ 1.0f, 0.2f, 0.8f, 1.0f },   
+		{ 1.0f, 1.0f, 0.2f, 1.0f },
 	};
 	const int paletteSize = (int)std::size(kPalette);
 

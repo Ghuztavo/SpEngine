@@ -9,7 +9,7 @@ public:
 #define ROW_COUNT 100
 #define COL_COUNT 100
 #define NODE_SIZE 1.0f
-#define AGENT_COUNT 50
+#define AGENT_COUNT 500
 #define AGENT_MOVE_SPEED 4.0f
 #define OBSTACLE_COUNT 100
 
@@ -46,7 +46,6 @@ public:
 private:
 	std::vector<AgentEntry> mAgents;
 
-	// Converts a grid node's (row,col) to a centred world XZ position
 	SpEngine::Math::Vector3 NodeToWorld(const Node* node) const;
 
 	std::vector<Node*> aStarPath;

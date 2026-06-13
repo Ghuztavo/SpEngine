@@ -9,8 +9,8 @@
       "CastShadow": false,
       "Shape": {
         "Type": "Plane",
-        "Rows": 200,
-        "Columns": 200,
+        "Rows": 2000,
+        "Columns": 2000,
         "Spacing": 1.0
       },
       "Material": {
@@ -28,7 +28,7 @@
       "Mass": 0.0,
       "ColliderData": {
         "Shape": "Hull",
-        "HalfExtents": [ 100.0, 1.0, 100.0 ],
+        "HalfExtents": [ 1000.0, 1.0, 1000.0 ],
         "Origin": [ 0.0, -1.0, 0.0 ]
       }
     }
