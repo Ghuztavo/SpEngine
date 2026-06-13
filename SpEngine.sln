@@ -142,6 +142,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C2B21A36-FC94-
 		Assets\Templates\UI\ui_sprite.json = Assets\Templates\UI\ui_sprite.json
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "26_GameMechanicFinal", "VGP336\26_GameMechanicFinal\26_GameMechanicFinal.vcxproj", "{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -470,6 +472,14 @@ Global
 		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x64.Build.0 = Release|x64
 		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.ActiveCfg = Release|Win32
 		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.Build.0 = Release|Win32
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Debug|x64.ActiveCfg = Debug|x64
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Debug|x64.Build.0 = Debug|x64
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Debug|x86.ActiveCfg = Debug|Win32
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Debug|x86.Build.0 = Debug|Win32
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Release|x64.ActiveCfg = Release|x64
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Release|x64.Build.0 = Release|x64
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Release|x86.ActiveCfg = Release|Win32
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -520,6 +530,7 @@ Global
 		{A1FCACBF-1954-440B-AE4C-1CBC6257CE79} = {8FD5C455-896B-4E09-BF46-73F386BCF170}
 		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {167DFF98-914B-4FC7-A57A-04AD35697E18}
 		{C2B21A36-FC94-4D39-AB7D-6B09F186CF9F} = {8FD5C455-896B-4E09-BF46-73F386BCF170}
+		{8F1AAF09-31E6-4781-ACC6-0CE082C791B9} = {04C7BEF0-8AFE-46CB-A9A7-46417A0B22AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87150F32-FC9B-48A9-A17A-901EC686C93E}

@@ -111,16 +111,6 @@ LRESULT CALLBACK InputSystem::InputSystemMessageHandler(HWND window, UINT messag
 				sInputSystem->mMouseRightEdge = mouseX + 1 >= rect.right;
 				sInputSystem->mMouseTopEdge = mouseY <= rect.top;
 				sInputSystem->mMouseBottomEdge = mouseY + 1 >= rect.bottom;
-
-
-				if (sInputSystem->IsMouseClipToWindow())
-				{
-					int width = rect.right - rect.left;
-					int height = rect.bottom - rect.top;
-					sInputSystem->mPrevMouseX = width / 2;
-					sInputSystem->mPrevMouseY = height / 2;
-					SetCursorPos(sInputSystem->mPrevMouseX, sInputSystem->mPrevMouseY);
-				}
 				break;
 			}
 			case WM_KEYDOWN:
@@ -188,6 +178,7 @@ void InputSystem::Initialize(HWND window)
 	sWindowMessageHandler.Hook(window, InputSystemMessageHandler);
 
 	mInitialized = true;
+	mWindow = window;
 
 	LOG("InputSystem -- System initialized.");
 }
@@ -228,6 +219,20 @@ void InputSystem::Update()
 	mMouseMoveY = mCurrMouseY - mPrevMouseY;
 	mPrevMouseX = mCurrMouseX;
 	mPrevMouseY = mCurrMouseY;
+
+	if (!mShowMouse)
+	{
+		RECT rect;
+		GetClientRect(mWindow, &rect);
+		mCurrMouseX = (rect.right - rect.left) / 2;
+		mCurrMouseY = (rect.bottom - rect.top) / 2;
+
+		mPrevMouseX = mCurrMouseX;
+		mPrevMouseY = mCurrMouseY;
+		const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+		const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+		SetCursorPos(screenWidth / 2, screenHeight / 2);
+	}
 
 	// Store the previous mouse state
 	for (int i = 0; i < 3; ++i)
@@ -305,6 +310,7 @@ bool InputSystem::IsMouseBottomEdge() const
 void InputSystem::ShowSystemCursor(bool show)
 {
 	ShowCursor(show);
+	mShowMouse = show;
 }
 
 void InputSystem::SetMouseClipToWindow(bool clip)

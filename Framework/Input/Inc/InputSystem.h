@@ -73,6 +73,7 @@ namespace SpEngine::Input
 		bool mMouseRightEdge = false;
 		bool mMouseTopEdge = false;
 		bool mMouseBottomEdge = false;
+		bool mShowMouse = true;
 
 		bool mInitialized = false;
 	};

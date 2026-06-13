@@ -15,6 +15,7 @@ void PlayerControllerComponent::Initialize()
 	mTransformComponent = GetOwner().GetComponent<TransformComponent>();
 	ASSERT(mRigidBodyComponent != nullptr || mTransformComponent != nullptr, "PlayerControllerComponent: no TransformComponent or RigidBodyComponent found.");
 
+	InputSystem::Get()->ShowSystemCursor(false);
 	// InputSystem::Get()->ShowCursor(false);
 }
 void PlayerControllerComponent::Terminate()
@@ -56,7 +57,7 @@ void PlayerControllerComponent::Update(float deltaTime)
 	}
 
 	float turnInput = 0.0f;
-	if (input->IsMouseDown(MouseButton::RBUTTON))
+	//if (input->IsMouseDown(MouseButton::RBUTTON))
 	{
 		turnInput = input->GetMouseMoveX() * turnSpeed;
 	}

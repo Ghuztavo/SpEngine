@@ -44,12 +44,12 @@ void Window::Initialize(HINSTANCE instance, const std::wstring& appName, uint32_
 	mScreenRect = { 0, 0, (LONG)width, (LONG)height };
 	AdjustWindowRect(&mScreenRect, WS_OVERLAPPEDWINDOW, FALSE);
 
-	const int screenWidth = GetSystemMetrics(SM_CYSCREEN);
+	const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 	const int winWidth = std::min(static_cast<int>(mScreenRect.right - mScreenRect.left), screenWidth);
 	const int winHeight = std::min(static_cast<int>(mScreenRect.bottom - mScreenRect.top), screenHeight);
 	const int left = (screenWidth - winWidth) / 2;
-	const int top = (screenWidth - winWidth) / 2;
+	const int top = (screenHeight - winHeight) / 2;
 
 	mScreenRect.left = left;
 	mScreenRect.top = top;
