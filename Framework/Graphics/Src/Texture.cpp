@@ -40,7 +40,7 @@ void Texture::Initialize(const std::filesystem::path& fileName)
 		fileName.c_str(),
 		nullptr,
 		&mShaderResourceView);
-	ASSERT(SUCCEEDED(hr), "Texture: failed to load texture %s", fileName.c_str());
+	ASSERT(SUCCEEDED(hr), "Texture: failed to load texture %s", fileName.string().c_str());
 
 	// to obtain width and height
 	// we need to get the resource info, convert to texture2D, then get texture description

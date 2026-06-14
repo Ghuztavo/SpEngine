@@ -20,3 +20,5 @@
 -scale 0.01 ../../Assets/Models/Elevator/Elevator.fbx ../../Assets/Models/Elevator/Elevator.model
 
 -scale 0.01 ../../Assets/Models/Container/Container.fbx ../../Assets/Models/Container/Container.model
+
+-scale 0.01 ../../Assets/Models/Gun/Gun.fbx ../../Assets/Models/Gun/Gun.model

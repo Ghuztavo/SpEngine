@@ -115,6 +115,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Objects", "Objects", "{E342
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\Objects\compound_mesh.json = Assets\Templates\Objects\compound_mesh.json
 		Assets\Templates\Objects\custom_obj.json = Assets\Templates\Objects\custom_obj.json
+		Assets\Templates\Objects\FinalPlayer_obj.json = Assets\Templates\Objects\FinalPlayer_obj.json
 		Assets\Templates\Objects\fps_camera_obj.json = Assets\Templates\Objects\fps_camera_obj.json
 		Assets\Templates\Objects\ground.json = Assets\Templates\Objects\ground.json
 		Assets\Templates\Objects\mesh_obj.json = Assets\Templates\Objects\mesh_obj.json
@@ -122,6 +123,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Objects", "Objects", "{E342
 		Assets\Templates\Objects\player_obj.json = Assets\Templates\Objects\player_obj.json
 		Assets\Templates\Objects\simple_mesh.json = Assets\Templates\Objects\simple_mesh.json
 		Assets\Templates\Objects\transform_obj.json = Assets\Templates\Objects\transform_obj.json
+		Assets\Templates\Objects\Weapon_component_obj.json = Assets\Templates\Objects\Weapon_component_obj.json
+		Assets\Templates\Objects\Weapon_obj.json = Assets\Templates\Objects\Weapon_obj.json
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24_HelloGameObjectFactory", "VGP336\24_HelloGameObjectFactory\24_HelloGameObjectFactory.vcxproj", "{A511BECD-32A0-4F52-8DF3-FBDCCB93CA40}"
@@ -130,6 +133,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "25_HelloGameWorld", "VGP336
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{A1FCACBF-1954-440B-AE4C-1CBC6257CE79}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Levels\FinalLevel.json = Assets\Templates\Levels\FinalLevel.json
 		Assets\Templates\Levels\level.json = Assets\Templates\Levels\level.json
 	EndProjectSection
 EndProject

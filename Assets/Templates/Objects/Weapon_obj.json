@@ -1,0 +1,29 @@
+{
+  "Components": {
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0, 0.0 ],
+      "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
+      "Scale": [ 1.0, 1.0, 1.0 ]
+    }
+  },
+  "Children": {
+    "MainCube": {
+      "Template": "../../Assets/Templates/Objects/Weapon_component_obj.json",
+      "Components": {
+        "TransformComponent": {
+          "Position": [ 0.0, 0.0, 0.0 ],
+          "Scale": [ 1.0, 0.5, 2.0 ]
+        }
+      }
+    },
+    "Handle": {
+      "Template": "../../Assets/Templates/Objects/Weapon_component_obj.json",
+      "Components": {
+        "TransformComponent": {
+          "Position": [ 0.0, -0.13, -0.15 ],
+          "Scale": [ 0.5, 1.0, 0.5 ]
+        }
+      }
+    }
+  }
+}
