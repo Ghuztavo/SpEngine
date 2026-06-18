@@ -28,6 +28,8 @@ namespace SpEngine::Physics
 
 		bool IsDynamic() const;
 
+		const btCollisionObject* GetCollisionObject() const { return mRigidBody; }
+
 	private:
 		void SyncWithGraphics() override;
 		btRigidBody* GetRigidBody() override;

@@ -131,5 +131,8 @@ Math::Vector2 UISpriteComponent::GetPosition(bool includeOrigin)
 	{
 		mUISprite.GetOrigin(x, y);
 	}
-	return { mPosition.x - x, mPosition.y - y };
+	// return { mPosition.x - x, mPosition.y - y };
+	const auto backBufferWidth  = static_cast<float>(GraphicsSystem::Get()->GetBackBufferWidth());
+	const auto backBufferHeight = static_cast<float>(GraphicsSystem::Get()->GetBackBufferHeight());
+	return { (backBufferWidth * 0.5f) + mPosition.x - x, (backBufferHeight * 0.5f) + mPosition.y - y };
 }

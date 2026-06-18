@@ -166,3 +166,73 @@ void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
 		mPhysicsObjects.erase(iter);
 	}
 }
+
+PhysicsWorld::RaycastResult PhysicsWorld::Raycast(const Math::Vector3& origin, const Math::Vector3& direction, float distance)
+{
+	RaycastResult result;
+	if (mDynamicsWorld == nullptr)
+	{
+		return result;
+	}
+
+	Math::Vector3 end = origin + (direction * distance);
+	btVector3 btFrom = TobtVector3(origin);
+	btVector3 btTo = TobtVector3(end);
+
+	btCollisionWorld::ClosestRayResultCallback callback(btFrom, btTo);
+	mDynamicsWorld->rayTest(btFrom, btTo, callback);
+
+	if (callback.hasHit())
+	{
+		result.hasHit = true;
+		result.hitPoint = ToVector3(callback.m_hitPointWorld);
+		result.hitNormal = ToVector3(callback.m_hitNormalWorld);
+	}
+
+	return result;
+}
+
+
+struct IgnoreBodyCallback : public btCollisionWorld::ClosestRayResultCallback
+{
+	const btCollisionObject* mIgnoreBody;
+
+	IgnoreBodyCallback(const btVector3& from, const btVector3& to, const btCollisionObject* ignore)
+		: btCollisionWorld::ClosestRayResultCallback(from, to)
+		, mIgnoreBody(ignore)
+	{}
+
+	btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace) override
+	{
+		if (rayResult.m_collisionObject == mIgnoreBody)
+		{
+			return 1.0f;
+		}
+		return btCollisionWorld::ClosestRayResultCallback::addSingleResult(rayResult, normalInWorldSpace);
+	}
+};
+
+PhysicsWorld::RaycastResult PhysicsWorld::Raycast(const Math::Vector3& origin, const Math::Vector3& direction, float distance, const btCollisionObject* ignoreBody)
+{
+	RaycastResult result;
+	if (mDynamicsWorld == nullptr)
+	{
+		return result;
+	}
+
+	Math::Vector3 end = origin + (direction * distance);
+	btVector3 btFrom = TobtVector3(origin);
+	btVector3 btTo = TobtVector3(end);
+
+	IgnoreBodyCallback callback(btFrom, btTo, ignoreBody);
+	mDynamicsWorld->rayTest(btFrom, btTo, callback);
+
+	if (callback.hasHit())
+	{
+		result.hasHit = true;
+		result.hitPoint = ToVector3(callback.m_hitPointWorld);
+		result.hitNormal = ToVector3(callback.m_hitNormalWorld);
+	}
+
+	return result;
+}

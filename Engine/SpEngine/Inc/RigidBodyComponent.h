@@ -22,6 +22,8 @@ namespace SpEngine
 		void SetAngularVelocity(const Math::Vector3& velocity);
 		const Math::Vector3 GetAngularVelocity() const;
 
+		const btCollisionObject* GetCollisionObject() const { return mRigidBody.GetCollisionObject(); }
+
 	private:
 		friend class PhysicsService;
 		Physics::CollisionShape mCollisionShape;

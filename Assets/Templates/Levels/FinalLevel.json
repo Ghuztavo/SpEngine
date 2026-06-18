@@ -15,7 +15,9 @@
 		},
 		"UIRenderService": {
 
-		}
+		},
+    "WeaponService": {
+    }
 	},
 	"GameObjects": {
 		"Ground": {
@@ -32,7 +34,7 @@
 			"Template": "../../Assets/Templates/Objects/compound_mesh.json"
 		},
 		"HUD": {
-			"Template": "../../Assets/Templates/UI/hud_screen.json"
+			"Template": "../../Assets/Templates/UI/Final_HUD.json"
 		},
 		"Player": {
 			"Template": "../../Assets/Templates/Objects/FinalPlayer_obj.json"

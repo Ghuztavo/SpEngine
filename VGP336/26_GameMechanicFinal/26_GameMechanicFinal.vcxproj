@@ -134,9 +134,14 @@
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="WeaponComponent.cpp" />
+    <ClCompile Include="WeaponService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="WeaponComponent.h" />
+    <ClInclude Include="WeaponService.h" />
+    <ClInclude Include="CustomTypeIDs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

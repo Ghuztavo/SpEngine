@@ -24,5 +24,7 @@ namespace SpEngine
 
 		Math::Vector3 mOffset = Math::Vector3::Zero;
 		float mSmoothingValue = 0.0f;
+		float mPitch = 0.0f;
+		float mTurnSpeed = 0.001f;
 	};
 }

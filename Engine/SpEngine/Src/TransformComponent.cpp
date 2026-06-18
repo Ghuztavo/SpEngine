@@ -44,8 +44,15 @@ Transform TransformComponent::GetWorldTransform() const
 			parent = parent->GetParent();
 		}
 		worldTransform.position = Math::GetTranslation(matWorld);
-		worldTransform.rotation = Math::Quaternion::CreateFromRotationMatrix(matWorld);
+		// worldTransform.rotation = Math::Quaternion::CreateFromRotationMatrix(matWorld);
 		worldTransform.scale = Math::GetScale(matWorld);
+		
+		Math::Matrix4 rotMat = matWorld;
+		if (worldTransform.scale.x != 0.0f) { rotMat._11 /= worldTransform.scale.x; rotMat._12 /= worldTransform.scale.x; rotMat._13 /= worldTransform.scale.x; }
+		if (worldTransform.scale.y != 0.0f) { rotMat._21 /= worldTransform.scale.y; rotMat._22 /= worldTransform.scale.y; rotMat._23 /= worldTransform.scale.y; }
+		if (worldTransform.scale.z != 0.0f) { rotMat._31 /= worldTransform.scale.z; rotMat._32 /= worldTransform.scale.z; rotMat._33 /= worldTransform.scale.z; }
+		
+		worldTransform.rotation = Math::Quaternion::CreateFromRotationMatrix(rotMat);
 	}
 	return worldTransform;
 }

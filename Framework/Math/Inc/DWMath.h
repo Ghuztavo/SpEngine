@@ -208,6 +208,7 @@ namespace SpEngine::Math
 
     inline Vector3 GetScale(const Matrix4& m)
     {
-        return { m._11, m._22, m._33 };
+        // return { m._11, m._22, m._33 };
+        return { Magnitude(GetRight(m)), Magnitude(GetUp(m)), Magnitude(GetLook(m)) };
     }
 }

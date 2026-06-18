@@ -222,16 +222,24 @@ void InputSystem::Update()
 
 	if (!mShowMouse)
 	{
-		RECT rect;
-		GetClientRect(mWindow, &rect);
-		mCurrMouseX = (rect.right - rect.left) / 2;
-		mCurrMouseY = (rect.bottom - rect.top) / 2;
+		// RECT rect;
+		// GetClientRect(mWindow, &rect);
+		// mCurrMouseX = (rect.right - rect.left) / 2;
+		// mCurrMouseY = (rect.bottom - rect.top) / 2;
 
-		mPrevMouseX = mCurrMouseX;
-		mPrevMouseY = mCurrMouseY;
+		// mPrevMouseX = mCurrMouseX;
+		// mPrevMouseY = mCurrMouseY;
 		const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 		const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 		SetCursorPos(screenWidth / 2, screenHeight / 2);
+
+		POINT center = { screenWidth / 2, screenHeight / 2 };
+		ScreenToClient(mWindow, &center);
+		mCurrMouseX = center.x;
+		mCurrMouseY = center.y;
+
+		mPrevMouseX = mCurrMouseX;
+		mPrevMouseY = mCurrMouseY;
 	}
 
 	// Store the previous mouse state

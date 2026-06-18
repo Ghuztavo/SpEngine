@@ -1,0 +1,11 @@
+{
+  "Components": {
+    "UISpriteComponent": {
+      "Texture": "UI/crosshair.png",
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 0.1, 0.1 ],
+      "Pivot": "Center",
+      "Rect": [ 0, 0, 0, 0 ]
+    }
+  }
+}

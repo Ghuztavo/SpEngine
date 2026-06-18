@@ -145,7 +145,7 @@ void GameState::DebugUI()
 	ImGui::Separator();
 	
 	mStandardEffect.DebugUI();
-	mShadowEffect.DegubUI();
+	mShadowEffect.DebugUI();	
 
 	ImGui::End();
 }

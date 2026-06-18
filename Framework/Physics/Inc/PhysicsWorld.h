@@ -8,6 +8,13 @@ namespace SpEngine::Physics
 	class PhysicsWorld final
 	{
 	public:
+		struct RaycastResult
+		{
+			bool hasHit = false;
+			Math::Vector3 hitPoint = Math::Vector3::Zero;
+			Math::Vector3 hitNormal = Math::Vector3::Zero;
+		};
+
 		struct Settings
 		{
 			// is the gravity used for physics simulations
@@ -38,6 +45,8 @@ namespace SpEngine::Physics
 		void Register(PhysicsObject* physicsObject);
 		void Unregister(PhysicsObject* physicsObject);
 
+		RaycastResult Raycast(const Math::Vector3& origin, const Math::Vector3& direction, float distance);
+		RaycastResult Raycast(const Math::Vector3& origin, const Math::Vector3& direction, float distance, const btCollisionObject* ignoreBody);
 
 	private:
 		Settings mSettings;

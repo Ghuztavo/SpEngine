@@ -6,7 +6,7 @@
       "Scale": [ 1.0, 1.0, 1.0 ]
     },
     "RigidBodyComponent": {
-      "Mass": 2.0,
+      "Mass": 5.0,
       "ColliderData": {
         "Shape": "Sphere",
         "Radius": 1.0
@@ -20,7 +20,7 @@
     },
     "TPSCameraComponent": {
       "Offset": [ 0.0, 1.0, 0.0 ],
-      "Smoothing": 10.0
+      "Smoothing": 50.0
     },
     "CameraComponent": {
     }

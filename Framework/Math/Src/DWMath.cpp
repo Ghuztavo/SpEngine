@@ -94,10 +94,11 @@ Quaternion Quaternion::CreateFromYawPitchRoll(float yaw, float pitch, float roll
 
 Quaternion Quaternion::CreateFromRotationMatrix(const Matrix4& m) noexcept
 {
-    const float w = sqrt(m._11 + m._22 + m._33 + 1.0f) * 0.5f;
-    const float x = sqrt(m._11 - m._22 - m._33 + 1.0f) * 0.5f;
-    const float y = sqrt(m._11 + m._22 - m._33 + 1.0f) * 0.5f;
-    const float z = sqrt(m._11 - m._22 + m._33 + 1.0f) * 0.5f;
+    const float w = sqrt(Max(0.0f, m._11 + m._22 + m._33 + 1.0f)) * 0.5f;
+    const float x = sqrt(Max(0.0f, m._11 - m._22 - m._33 + 1.0f)) * 0.5f;
+    const float y = sqrt(Max(0.0f, -m._11 + m._22 - m._33 + 1.0f)) * 0.5f;
+    const float z = sqrt(Max(0.0f, -m._11 - m._22 + m._33 + 1.0f)) * 0.5f;
+    
     Quaternion q;
     if (w >= x && w >= y && w >= z)
     {
@@ -110,21 +111,21 @@ Quaternion Quaternion::CreateFromRotationMatrix(const Matrix4& m) noexcept
     {
         q.w = (m._23 - m._32) / (4.0f * x);
         q.x = x;
-        q.y = (m._12 - m._21) / (4.0f * x);
-        q.z = (m._31 - m._13) / (4.0f * x);
+        q.y = (m._12 + m._21) / (4.0f * x);
+        q.z = (m._13 + m._31) / (4.0f * x);
     }
     else if (y >= w && y >= x && y >= z)
     {
         q.w = (m._31 - m._13) / (4.0f * y);
-        q.x = (m._12 - m._21) / (4.0f * y);
+        q.x = (m._12 + m._21) / (4.0f * y);
         q.y = y;
-        q.z = (m._23 - m._32) / (4.0f * z);
+        q.z = (m._23 + m._32) / (4.0f * y);
     }
     else if (z >= w && z >= x && z >= y)
     {
         q.w = (m._12 - m._21) / (4.0f * z);
-        q.x = (m._31 - m._13) / (4.0f * z);
-        q.y = (m._23 - m._32) / (4.0f * z);
+        q.x = (m._13 + m._31) / (4.0f * z);
+        q.y = (m._23 + m._32) / (4.0f * z);
         q.z = z;
     }
 

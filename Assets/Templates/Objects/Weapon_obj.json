@@ -4,11 +4,19 @@
       "Position": [ 0.0, 0.0, 0.0 ],
       "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
       "Scale": [ 1.0, 1.0, 1.0 ]
+    },
+    "WeaponComponent": {
+      "MuzzleOffset": [ 0.0, 0.0, 0.5 ],
+      "TrailColor": [ 1.0, 0.5, 0.0, 1.0 ],
+      "Range": 100.0,
+      "TimeBetweenShots": 0.5,
+      "ParticleTexture": "../../Assets/Textures/Images/explosion.png",
+      "ShootSound": "../../Assets/Audio/megamanx_blast.wav"
     }
   },
   "Children": {
     "MainCube": {
-      "Template": "../../Assets/Templates/Objects/Weapon_component_obj.json",
+      "Template": "../../Assets/Templates/Objects/Weapon_part_obj.json",
       "Components": {
         "TransformComponent": {
           "Position": [ 0.0, 0.0, 0.0 ],
@@ -17,7 +25,7 @@
       }
     },
     "Handle": {
-      "Template": "../../Assets/Templates/Objects/Weapon_component_obj.json",
+      "Template": "../../Assets/Templates/Objects/Weapon_part_obj.json",
       "Components": {
         "TransformComponent": {
           "Position": [ 0.0, -0.13, -0.15 ],
